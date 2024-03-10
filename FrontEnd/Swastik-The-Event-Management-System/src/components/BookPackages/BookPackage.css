@@ -1,0 +1,44 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.image{
+    height: 50vh;
+    width: 98%;
+    background-position: center;
+    background-size: cover;
+    margin: auto;
+    margin-top: 0.5em;
+}
+.offers{
+    width: 90%;
+    height: 10vh;
+    margin: auto;
+    background-color: rgb(150, 150, 150);
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+.event-locations{
+    width: 90%;
+    display: flex;
+    margin: auto;
+    justify-content: left;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+.table{
+    margin: auto;
+    width: 90%;
+    border: 1px solid black;
+}
+.head{
+    border:1px solid black;
+    height: 4rem;
+    width:45%;
+}
+.td{
+    border: 1px solid rgb(114, 114, 114);
+    margin: auto;
+    width: 50%;
+    padding: 0.5rem;
+}
