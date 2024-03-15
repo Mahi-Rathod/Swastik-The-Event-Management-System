@@ -50,8 +50,7 @@ function TrendingPackages(){
             desc:"Bark Birthday Cakes, Celebrations, Drinks, Caters and many mores.",
             rate:"₹50,000/-",
             sold:"200+",
-        }
-        
+        }  
     ]
     return(
         <>
