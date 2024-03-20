@@ -37,12 +37,12 @@
     font-weight: bold;
 }
 .perks-containers .perks1 h2{
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 1.5rem;
+    font-family: 'Cascadia Code font';
+    font-size: 1.4rem;
     font-weight: bold;
 }
 .perks-containers .perks1 p{
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 0.9rem;
+    font-family: 'DejaVu Sans Mono';
+    font-size: 1.2rem;
     text-align: justify;
 }
