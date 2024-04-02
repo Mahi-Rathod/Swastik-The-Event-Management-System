@@ -8,19 +8,20 @@ class Category(models.Model):
     def __str__(self) -> str:
         return self.name
 
-class vendor(models.Model):
+class Vendor(models.Model):
     pass
 
-class Products(models.Model):
+class Product(models.Model):
     name        = models.CharField(max_length = 100)
     description = models.CharField(max_length = 100)
     price       = models.CharField(max_length = 100)
     image       = models.ImageField(upload_to='images/', default="")
     category    = models.ForeignKey(Category, on_delete = models.CASCADE)
-    owner       = models.ForeignKey(Category, on_delete  = models.CASCADE)
+    # owner       = models.ForeignKey(Vendor, on_delete  = models.CASCADE)
 
     def __str__(self) -> str:
-        return self.title
+        return self.name
+
 
 class Customer(models.Model):
     pass

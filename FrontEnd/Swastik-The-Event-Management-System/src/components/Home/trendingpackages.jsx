@@ -1,11 +1,14 @@
 import './trendingpackages.css'
 import Product from '../Products/product';
+import axios from 'axios'
 import img1 from '../../assets/packages/img1.jpg'
 import img2 from '../../assets/packages/img2.jpg'
 import img3 from '../../assets/packages/img3.jpg'
 import img11 from '../../assets/packages/img11.jpg'
 import img5 from '../../assets/packages/img5.jpg'
 import img6 from '../../assets/packages/img6.jpg'
+import { useEffect } from 'react';
+
 function TrendingPackages(){
 
     const products = [
@@ -52,6 +55,16 @@ function TrendingPackages(){
             sold:"200+",
         }  
     ]
+    // useEffect(() => {
+    //   try {
+    //     const response = 
+    //   } catch (error) {
+    //     console.log("Error in fetch API...")
+    //   }
+    // }, [])
+    
+    
+
     return(
         <>
             <div className="package-menu">
