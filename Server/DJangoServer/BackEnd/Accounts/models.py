@@ -17,6 +17,7 @@ class Product(models.Model):
     price       = models.CharField(max_length = 100)
     image       = models.ImageField(upload_to='images/', default="")
     category    = models.ForeignKey(Category, on_delete = models.CASCADE)
+    sold        = models.IntegerField(default = 0)
     # owner       = models.ForeignKey(Vendor, on_delete  = models.CASCADE)
 
     def __str__(self) -> str:
