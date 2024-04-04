@@ -28,7 +28,7 @@ function Footer(){
                     <hr />
                 </div>
                 <div className="social-media"> <br />
-                    <FaFacebookF     />
+                    <FaFacebookF/>
                     <SlSocialTwitter/>
                     <FaLinkedinIn/>
                     <FaGooglePlusG/>
