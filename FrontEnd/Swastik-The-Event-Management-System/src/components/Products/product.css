@@ -59,7 +59,7 @@
     justify-content: space-evenly;
 }
 .details .rate-sold p{
-    width: 4rem;
+    width: 5rem;
     color: #fff;
     padding: 0.2rem;
     background: transparent;
@@ -106,7 +106,7 @@
 .rate-sold{
     display: flex;
     justify-content: space-between;
-    width: 90%;
+    width: 100%;
 }
 .product-container:hover .details{
     height: 100%;
