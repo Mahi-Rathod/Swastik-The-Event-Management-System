@@ -14,7 +14,7 @@ function Product({img,name,desc,rate,sold}){
                     <p>{sold}</p>
                     <p>{rate}</p>
                 </div>
-                <button className='Book-Now'><Link to={`services/book-package`}>Book</Link> <RiShareCircleLine /></button>
+                <button className='Book-Now'> <Link to={`services/book-package`}>Book</Link></button>
             </div>
             <div className="product-details">
                 <div className="name-heart">

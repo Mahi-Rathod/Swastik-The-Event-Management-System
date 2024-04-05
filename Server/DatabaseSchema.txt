@@ -75,3 +75,11 @@ UnitPrice
         -> View Packages
         -> Book Orders
         -> Payment
+
+
+
+
+
+ProductSchema :-
+
+Title  |  Description  |  
