@@ -22,7 +22,7 @@ export default function Contact() {
                         <p className="text-center text-xs font-semibold leading-normal md:text-sm">
                             Share your thoughts
                         </p>
-                    </div>
+                    </div>  
                     <p className="text-center text-3xl font-bold text-gray-900 md:text-5xl md:leading-10">
                         Love to hear from you
                     </p>
