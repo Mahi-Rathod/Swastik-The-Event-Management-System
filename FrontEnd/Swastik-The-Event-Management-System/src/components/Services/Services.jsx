@@ -25,7 +25,7 @@ import React, { useState } from "react";
 import './Services.css'
 import SendEnquiry from './SendEnquiry/SendEnquiry'
 import FeaturedEvent from './ServicesComponents/FeaturedEvent'
-
+                                                                                                                        
 function Services() {
     const [queryPopUp, setQueryPopUp] = useState(false);
     const [queries, setQueries] = useState([]);

@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-# class CustomerAccounts(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length  = 100)
 
@@ -37,8 +36,5 @@ class Venue(models.Model):
     }
 
 class Customer(models.Model):
-    pass
-
-class Order(models.Model):
     pass
 

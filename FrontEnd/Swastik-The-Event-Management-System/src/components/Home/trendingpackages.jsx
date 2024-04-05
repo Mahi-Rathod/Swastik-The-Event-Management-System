@@ -70,7 +70,6 @@ function TrendingPackages(){
     }, [])
     
     
-
     return(
         <>
             <div className="package-menu">
