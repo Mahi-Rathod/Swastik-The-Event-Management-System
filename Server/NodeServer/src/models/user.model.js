@@ -1,5 +1,5 @@
 import mongoose, {Schema} from "mongoose";
-import jwt from 'jsonwebtoken';
+import jwt from 'json-web-token';
 import bcrypt, {hash} from 'bcrypt';
 
 const userSchema = new Schema({
@@ -10,7 +10,7 @@ const userSchema = new Schema({
         required: true,
         lowercase: true,
     },
-    fullname :{
+    fullName :{
         type: String,
         trim: true,
         index: true,
@@ -21,10 +21,10 @@ const userSchema = new Schema({
         trim: true,
         index: true,
     },
-    avtar:{
-        type: String,  //Cloudnary URL
-        required:true,
-    },
+    // avtar:{
+    //     type: String,  //Cloudnary URL
+    //     required:true,
+    // },
     password :{
         type: String,
         required: [true, "Password is Required"],
@@ -54,8 +54,8 @@ userSchema.methods.generateAccessToken = function(){
         {
             _id  : this._id,
             email : this.email,
-            username : this.username,
-            fullname : this.fullname,
+            mobileNumber : this.mobileNumber,
+            fullName : this.fullname,
         },
         process.env.ACCESS_TOKEN_SECRET,
         {
@@ -76,3 +76,5 @@ userSchema.methods.generateRefreshToken = function(){
         }
     )
 }
+
+export const User = mongoose.model("User", userSchema)
