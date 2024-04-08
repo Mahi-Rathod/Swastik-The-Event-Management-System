@@ -5,10 +5,6 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js"
 import { ApiResponse } from "../utils/ApiResponse.js";
 
 const registerUser = asyncHandler (async(req, res)=>{
-    // res.status(200).json({
-    //     message : "ok"
-    // })
-
     const {fullName, email, mobileNumber, password} =req.body
     console.log("fullName: ", fullName)
 
