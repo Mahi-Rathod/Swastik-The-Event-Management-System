@@ -60,4 +60,27 @@ const registerUser = asyncHandler (async(req, res)=>{
 
 })
 
+const loginUser = asyncHandler (async(req, res) => {
+
+    const {email, mobileNumber, password} = req.body
+
+    if(!email || !mobileNumber){
+        throw new ApiError(400, "email or mobileNumber are required")
+    }
+
+    const existUser = await User.findOne({
+        $or: [{email}, {mobileNumber}]
+    })
+
+    if(!existUser){
+        throw new ApiError(401, "User with given credentials is Not Found ")
+    }
+    const checkPassword = await isPasswordCorrect(password);
+
+    if(!checkPassword){
+        throw new ApiError(401, "Invalid Password")
+    }
+
+
+})
 export {registerUser}
