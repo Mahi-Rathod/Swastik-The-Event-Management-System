@@ -14,7 +14,7 @@ const registerUser = asyncHandler (async(req, res)=>{
         throw new ApiError(400, "All fields are required");
     }
 
-    const existedUser = User.findOne({
+    const existedUser = await User.findOne({
         $or: [{ email }, { mobileNumber }]
     })
 
@@ -38,7 +38,7 @@ const registerUser = asyncHandler (async(req, res)=>{
     //     throw new ApiError(400, "Avatar File is Required");
     // }
 
-    const user = User.create({
+    const user = await User.create({
         fullName,
         // avatar : avatar.url,
         // coverImage: coverImage?.url || "" ,

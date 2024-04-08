@@ -19,6 +19,7 @@ const userSchema = new Schema({
         type: String,
         trim: true,
         index: true,
+        required: true
     },
     // avtar:{
     //     type: String,  //Cloudnary URL
