@@ -5,6 +5,7 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js"
 import { ApiResponse } from "../utils/ApiResponse.js";
 
 const registerUser = asyncHandler (async(req, res)=>{
+
     const {fullName, email, mobileNumber, password} =req.body
     console.log("fullName: ", fullName)
 
@@ -14,7 +15,7 @@ const registerUser = asyncHandler (async(req, res)=>{
         throw new ApiError(400, "All fields are required");
     }
 
-    const existedUser = await User.findOne({
+    const existedUser = User.findOne({
         $or: [{ email }, { mobileNumber }]
     })
 
@@ -38,7 +39,7 @@ const registerUser = asyncHandler (async(req, res)=>{
     //     throw new ApiError(400, "Avatar File is Required");
     // }
 
-    const user = await User.create({
+    const user = User.create({
         fullName,
         // avatar : avatar.url,
         // coverImage: coverImage?.url || "" ,
@@ -48,7 +49,7 @@ const registerUser = asyncHandler (async(req, res)=>{
     })
 
     const createdUser = await User.findById(user._id).select("-password -refreshToken")
-
+    
     if(!createdUser){
         throw new ApiError(500, "Sommething Went Wrong while registring the User..")
     }
