@@ -5,14 +5,13 @@ import { useState } from 'react'
 import axios from "axios"
 import './login.css'
 import { useDispatch,useSelector} from 'react-redux'
-import { login } from '../../Store/authSlice'
+import { loginSuccess } from '../../Store/authSlice'
 function UserSignIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const checkAuth = useSelector((state) => state.authentication.status);
   const [registerData, setRegisterData] = useState({
-    email : "",
-    phone:"",
+    mobileNumber : "",
     password:"",
   })
   const handleChange = (e) =>{
@@ -26,12 +25,12 @@ function UserSignIn() {
   const handleSubmit = async (e) =>{
     e.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:8000/Authentication/login/', registerData);
+      const response = await axios.post('http://localhost:8000/api/v1/users/login', registerData);
       console.log(response.data); // Assuming your API returns a success message or user data upon successful registration
       // Reset form data after successful registration
-      if(response.data.status === '200'){
-        alert("Logged In");
-        dispatch(login());
+      if(response.data.statusCode === 200){
+        // alert("Logged In");
+        dispatch(loginSuccess());
         navigate('/');
       }
     } catch (error) {
@@ -55,22 +54,14 @@ function UserSignIn() {
           <div className='p-5 rounded drop-shadow-md'>
             <form className='flex flex-col gap-2' onSubmit={handleSubmit}>
               <div className="input-box">
-                <input type="email" name="email"
-                  value={registerData.email}
+                <input type="text" name="mobileNumber"
+                  value={registerData.mobileNumber}
                   onChange={handleChange}
                   required
                 />
-                <span>Email</span>
+                <span>mobileNumber</span>
               </div>
 
-              <div className="input-box">
-                <input type="text" name="phone"
-                  value={registerData.phone}
-                  onChange={handleChange}
-                  required
-                />
-                <span>Mobile Number</span>
-              </div>
 
               <div className="input-box">
                 <input type="password" name="password"

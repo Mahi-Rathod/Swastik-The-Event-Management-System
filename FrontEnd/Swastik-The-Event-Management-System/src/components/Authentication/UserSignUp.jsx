@@ -9,10 +9,9 @@ function UserSignUp() {
   const [confirmPassword, setConfirmPassword] = useState("")
   const navigate = useNavigate();
   const [registerData, setRegisterData] = useState({
-    first_name:"",
-    last_name :"",
+    fullName:"",
     email : "",
-    phone:"",
+    mobileNumber:"",
     password:""
   })
   const handleChange = (e) =>{
@@ -30,16 +29,18 @@ function UserSignUp() {
       return
     }
     try {
-      const response = await axios.post('http://127.0.0.1:8000/Authentication/register/', registerData);
-      console.log(response.data); // Assuming your API returns a success message or user data upon successful registration
+      console.log(registerData)
+      const response = await axios.post('http://localhost:8000/api/v1/users/register', registerData);
+      console.log(response.data); // Assuming API returns a success message or user data upon successful registration
       // Reset form data after successful registration
-      if(response.data.status === 200){
+      if(response.data.statusCode === 200){
         alert("Account Created Successfully");
         navigate('/login');
       }
       setPasswordMatchError('');
     } catch (error) {
-      console.error('Error registering user:', error);
+      console.log("Error in Registering User: ", error);
+      alert('Error registering user:');
     }
   }
 
@@ -64,20 +65,11 @@ function UserSignUp() {
               
               <div className="input-box">
                 <input 
-                  type="text" name="first_name"
-                  value={registerData.first_name}
+                  type="text" name="fullName"
+                  value={registerData.fullName}
                   onChange={handleChange}
                   required />
-                <span>First Name</span>
-              </div>
-
-              <div className="input-box">
-                <input type="text" name="last_name"
-                  value={registerData.last_name}
-                  onChange={handleChange}
-                  required 
-                />
-                <span>Last Name</span>
+                <span>Full Name</span>
               </div>
 
               <div className="input-box">
@@ -90,8 +82,8 @@ function UserSignUp() {
               </div>
 
               <div className="input-box">
-                <input type="text" name="phone"
-                  value={registerData.phone}
+                <input type="text" name="mobileNumber"
+                  value={registerData.mobileNumber}
                   onChange={handleChange}
                   required
                 />

@@ -2,9 +2,9 @@ import { IoMenu } from "react-icons/io5";
 import logo from "../../assets/logo.png";
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../Store/authSlice";
+import { logoutSuccess } from "../../Store/authSlice";
 function Navbar() {
-    const checkAuth = useSelector((state) => state.authentication.status)
+    const checkAuth = useSelector((state) => state.authentication.isAuthenticated)
     const dispatch = useDispatch()
     return (
         <header className="shadow sticky z-50 top-0">
@@ -39,7 +39,7 @@ function Navbar() {
                             <Link
                                 to='/login'
                                 className="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none"
-                                onClick={()=>dispatch(logout())}
+                                onClick={()=>dispatch(logoutUser())}
                             >
                                 Log Out
                             </Link>
