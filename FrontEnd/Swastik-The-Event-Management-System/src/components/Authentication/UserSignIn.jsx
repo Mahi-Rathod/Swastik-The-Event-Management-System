@@ -1,19 +1,22 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import { NavLink,useNavigate } from 'react-router-dom'
 import girlimg from '../../assets/logingirl.jpg'
-import { useState } from 'react'
 import axios from "axios"
 import './login.css'
 import { useDispatch,useSelector} from 'react-redux'
 import { loginSuccess } from '../../Store/authSlice'
+
 function UserSignIn() {
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const checkAuth = useSelector((state) => state.authentication.status);
   const [registerData, setRegisterData] = useState({
     mobileNumber : "",
     password:"",
   })
+ 
   const handleChange = (e) =>{
     const { name, value } = e.target;
     setRegisterData({
@@ -24,12 +27,11 @@ function UserSignIn() {
 
   const handleSubmit = async (e) =>{
     e.preventDefault();
+
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/users/login', registerData);
-      console.log(response.data); // Assuming your API returns a success message or user data upon successful registration
-      // Reset form data after successful registration
+      const response = await axios.post('http://localhost:8000/api/v1/users/login', registerData, { withCredentials: true });
+    
       if(response.data.statusCode === 200){
-        // alert("Logged In");
         dispatch(loginSuccess());
         navigate('/');
       }

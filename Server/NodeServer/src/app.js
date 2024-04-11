@@ -5,7 +5,8 @@ import cors from 'cors';
 const app = express();
 app.use(cors({
     origin:process.env.CORS_ORIGIN,
-    credentials: true
+    credentials: true,
+    exposedHeaders: ['Content-Length', 'Authorization', 'Set-Cookie'],  
 }));
 
 app.use(express.json({

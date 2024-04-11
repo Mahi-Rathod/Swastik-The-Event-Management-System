@@ -1,11 +1,48 @@
-import { IoMenu } from "react-icons/io5";
 import logo from "../../assets/logo.png";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutSuccess } from "../../Store/authSlice";
+import { logoutSuccess, loginSuccess } from "../../Store/authSlice";
+import axios from "axios"
+import { useEffect } from "react";
+
+
+
 function Navbar() {
     const checkAuth = useSelector((state) => state.authentication.isAuthenticated)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const axiosInstance = axios.create({
+        // Your backend URL
+        baseURL: 'http://localhost:8000/api/v1/users',
+        // Set credentials to include cookies with each request
+        withCredentials: true
+    });
+
+    useEffect(() => {
+
+        async function fetchData() {
+            try {
+                const response = await axiosInstance.get('/getUser');
+                if (response.data.statusCode === 200) {
+                    dispatch(loginSuccess());
+                    navigate('/');
+                }
+            } catch (error) {
+                console.error('Error registering user:', error);
+            }
+
+        }
+        fetchData()
+    }, [])
+
+    const handleLogout = async () => {
+        try {
+            const response = await axiosInstance.post('/logout');
+            dispatch(logoutSuccess());
+        } catch (error) {
+            console.log(error)
+        }
+    }
     return (
         <header className="shadow sticky z-50 top-0">
             <nav className="bg-gray-200 border-gray-200 px4 lg:px-6 py-1">
@@ -37,9 +74,9 @@ function Navbar() {
                     {checkAuth &&
                         <div className="flex items-center lg:order-2">
                             <Link
-                                to='/login'
+                                // to='/login'
                                 className="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none"
-                                onClick={()=>dispatch(logoutUser())}
+                                onClick={handleLogout}
                             >
                                 Log Out
                             </Link>
