@@ -6,7 +6,6 @@ import axios from "axios"
 import { useEffect } from "react";
 
 
-
 function Navbar() {
     const checkAuth = useSelector((state) => state.authentication.isAuthenticated)
     const dispatch = useDispatch()
@@ -27,13 +26,16 @@ function Navbar() {
                     dispatch(loginSuccess());
                     navigate('/');
                 }
-            } catch (error) {
-                console.error('Error registering user:', error);
+            }
+             catch (error) {
+                // console.error('Error login User:', error);
+                // navigate('/');
             }
 
         }
         fetchData()
-    }, [])
+    }, [navigate, checkAuth])
+
 
     const handleLogout = async () => {
         try {
