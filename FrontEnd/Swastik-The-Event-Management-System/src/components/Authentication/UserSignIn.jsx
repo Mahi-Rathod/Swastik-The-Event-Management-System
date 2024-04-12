@@ -66,7 +66,6 @@ function UserSignIn() {
 
   return (
     <div className='w-[90%] h-[90vh] m-auto flex justify-center items-center'>
-      {/* <h1>{fetchResult}</h1> */}
       <div className='w-[80%] h-[80vh] flex gap-2'>
         <div className='w-2/4 h-full rounded bg-white flex justify-center items-center'>
           <img src={girlimg} alt="" />

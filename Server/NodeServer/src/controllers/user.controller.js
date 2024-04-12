@@ -26,11 +26,10 @@ const generateAccessAndRefreshToken = async(userId) =>{
 //Controller for Registering the Users
 const registerUser = asyncHandler (async(req, res)=>{
 
-    const {fullName, email, mobileNumber, password} =req.body
-    console.log("fullName: ", fullName)
+    const {fullName, email, mobileNumber, password, isVendor} =req.body
 
     if(
-        [fullName, email, mobileNumber, password].some((field)=> field?.trim()==="")
+        [fullName, email, mobileNumber, password, isVendor].some((field)=> field?.trim()==="")
     ){
         throw new ApiError(400, "All fields are required");
     }
@@ -43,10 +42,12 @@ const registerUser = asyncHandler (async(req, res)=>{
         throw new ApiError(409, "User with email or phone exist");
     }
 
+    Boolean(isVendor);
     const user = await User.create({
         fullName,
         email,
         mobileNumber,
+        isVendor,
         password
     })
 

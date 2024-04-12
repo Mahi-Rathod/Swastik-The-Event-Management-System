@@ -12,7 +12,8 @@ function UserSignUp() {
     fullName:"",
     email : "",
     mobileNumber:"",
-    password:""
+    password:"",
+    isVendor:"false"
   })
   const handleChange = (e) =>{
     const { name, value } = e.target;
@@ -108,7 +109,7 @@ function UserSignUp() {
                 <span>Confirm Password</span>
               </div>
               
-
+            
               <div className='submit-btn'>
                 <button>Register</button>
               </div>
