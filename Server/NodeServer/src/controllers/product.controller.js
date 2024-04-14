@@ -1,8 +1,6 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { Product } from "../models/product.model.js";
-import { User } from "../models/user.model.js";
-import jwt from "jsonwebtoken";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
 const addProduct = asyncHandler(async (req, res) => {
@@ -12,16 +10,7 @@ const addProduct = asyncHandler(async (req, res) => {
         throw new ApiError(400, "All Fields are required");
     }
 
-    const userToken = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "");
-
-    let decodeToken;
-    try {
-        decodeToken = jwt.verify(userToken, process.env.ACCESS_TOKEN_SECRET);
-    } catch (err) {
-        throw new ApiError(401, "Invalid token");
-    }
-
-    const user = await User.findById(decodeToken?._id).select("-password -refreshToken");
+    const user = req.user
 
     const product = await Product.create({
         productName,

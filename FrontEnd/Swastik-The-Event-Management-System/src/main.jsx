@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+
+import './index.css'
 import Layout from './Layout/Layout.jsx'
 import Home from './components/Home/Home.jsx'
 import About from './components/About/About.jsx'
@@ -12,6 +13,8 @@ import MarriageEvents from './components/Services/ServicesComponents/MarriageEve
 import UserSignIn from './components/Authentication/UserSignIn.jsx'
 import UserSignUp from './components/Authentication/UserSignUp.jsx'
 import VendorSignIn from './components/Authentication/VendorSignIn.jsx'
+import AddProducts from './components/VendorThings/AddProducts.jsx'
+
 const router = createBrowserRouter([{
   path:'',
   element:<Layout />,
@@ -27,6 +30,7 @@ const router = createBrowserRouter([{
     {path:'login',element:<UserSignIn />},
     {path:'signup',element:<UserSignUp />},
     {path:'vendor-sign-in',element:<VendorSignIn/>},
+    {path:'add-products', element:<AddProducts/>}
   ],
 }])
 

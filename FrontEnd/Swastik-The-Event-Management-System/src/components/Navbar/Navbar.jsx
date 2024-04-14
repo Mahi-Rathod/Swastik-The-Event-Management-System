@@ -3,11 +3,12 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutSuccess, loginSuccess } from "../../Store/authSlice";
 import axios from "axios"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 
 function Navbar() {
-    const checkAuth = useSelector((state) => state.authentication.isAuthenticated)
+    const checkAuth = useSelector((state) => state.authentication.isAuthenticated);
+    const [isVendor, setIsVendor] = useState(false);
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const axiosInstance = axios.create({
@@ -23,13 +24,16 @@ function Navbar() {
             try {
                 const response = await axiosInstance.get('/getUser');
                 if (response.data.statusCode === 200) {
+                    console.log(response.data.data.user.isVendor)
+                    if (response.data.data.user.isVendor === true) {
+                        setIsVendor(true);
+                    }
                     dispatch(loginSuccess());
                     navigate('/');
                 }
             }
-             catch (error) {
-                // console.error('Error login User:', error);
-                // navigate('/');
+            catch (error) {
+                console.log(error)
             }
 
         }
@@ -39,7 +43,7 @@ function Navbar() {
 
     const handleLogout = async () => {
         try {
-            const response = await axiosInstance.post('/logout');
+            await axiosInstance.post('/logout');
             dispatch(logoutSuccess());
         } catch (error) {
             console.log(error)
@@ -55,6 +59,18 @@ function Navbar() {
                             className="sticky mr-3 h-14"
                         />
                     </Link>
+
+                    {isVendor &&
+                        <div className="flex items-center lg:order-2">
+                            <Link
+                                className="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none"
+                                to='/add-products'
+                            >
+                                Add Products
+                            </Link>
+                        </div>
+                    }
+
                     {!checkAuth &&
                         <div className="flex items-center lg:order-2">
                             <Link
@@ -85,7 +101,7 @@ function Navbar() {
                         </div>
                     }
 
-
+                    
 
 
                     <div
