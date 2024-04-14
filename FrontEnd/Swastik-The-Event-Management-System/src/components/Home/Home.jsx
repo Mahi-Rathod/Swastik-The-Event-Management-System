@@ -28,6 +28,7 @@ function Home() {
 
 
     return (
+        
         <>
             {/* <Slogan /> */}
             <Gallery slides={slides} />
