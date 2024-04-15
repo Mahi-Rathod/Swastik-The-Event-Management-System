@@ -28,8 +28,14 @@ function Navbar() {
                     if (response.data.data.user.isVendor === true) {
                         setIsVendor(true);
                     }
+                    else{
+                        setIsVendor(false);
+                    }
                     dispatch(loginSuccess());
                     navigate('/');
+                }
+                else{
+                    setIsVendor(false);
                 }
             }
             catch (error) {
@@ -45,6 +51,7 @@ function Navbar() {
         try {
             await axiosInstance.post('/logout');
             dispatch(logoutSuccess());
+            setIsVendor(false);
         } catch (error) {
             console.log(error)
         }

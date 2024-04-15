@@ -5,7 +5,16 @@ import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.route("/add-product").post(verifyJWT, addProduct);
+router.route("/add-product").post(
+    verifyJWT,
+    upload.fields([
+        {
+            name : "productImage",
+            maxCount:1
+        }
+    ]),
+     addProduct
+    );
 router.route("/get-product").get(getProducts);
 
 export default router;

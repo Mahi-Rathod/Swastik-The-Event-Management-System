@@ -1,89 +1,109 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-// import { postProductStart, postProductSuccess, postProductFailure } from '../../Store/PostProductSlice'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 
 function AddProducts() {
-  const dispatch = useDispatch();
-  const [images, setImages] = useState(null);
+
+  const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    price: '',
-    quantity: '',
-    category: '',
-    image: null,
-  });
+    productName: "",
+    productDescription: "",
+    productPrice: "",
+    category: "",
+    productImage: null
+  })
+  useEffect(() => {
+    const fetchData = async () => {
+      const responseData = await axios.get("http://localhost:8000/api/v1/category/get-category");
+      setCategories(responseData.data.data.categories)
+    }
+
+    fetchData();
+  }, [])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value
-    });
-  };
+    })
+  }
 
   const handleImageChange = (e) => {
-    console.log(e.target.files[0])
-    
     setFormData({
-      ...formData, image:e.target.files[0]
-    })
-  };
+      ...formData, productImage: e.target.files[0]
+    });
+  }
+  const axiosInstance = axios.create({
+    // Your backend URL
+    baseURL: 'http://localhost:8000/api/v1/product',
+    // Set credentials to include cookies with each request
+    withCredentials: true
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const requestData = new FormData();
-    requestData.append('title',formData.title);
-    requestData.append('description',formData.description)
-    requestData.append('quantity',formData.quantity)
-    requestData.append('price',formData.price)
-    requestData.append('category',formData.category)
-    requestData.append('image',formData.image)
+    requestData.append('productName', formData.productName);
+    requestData.append('productDescription', formData.productDescription);
+    requestData.append('productPrice', formData.productPrice)
+    requestData.append('category', formData.category)
+    requestData.append('productImage', formData.productImage)
 
-    console.log(requestData)
-
-    // dispatch(postProductStart());
+    console.log(formData.productImage)
     try {
-      console.log(formData)
-      const response = await axios.post("http://localhost:8000/api/v1/product/add-product", requestData);
-      console.log(response.data)
-    //   dispatch(postProductSuccess(data));
-    } catch (err) {
-    //   dispatch(postProductFailure(err.message));
+      const response = await axiosInstance.post("/add-product", requestData);
+      if (response.data.statusCode === 201) {
+        console.log("hii bhai check karle pahle")
+        setFormData({
+          ...formData,
+          productName: "",
+          productDescription: "",
+          productPrice: "",
+          category: "",
+          productImage: null
+        })
+      }
     }
-  };
+    catch (error) {
+      console.log("something went wrong")
+    }
 
+  }
+  const checkResponse = () => {
+    console.log(categories)
+  }
   return (
     <div>
+      <button onClick={checkResponse}> click me</button>
       <div className="max-w-md mx-auto bg-white p-8 border shadow-lg rounded-lg">
-        <h2 className="text-2xl font-bold mb-4">Add Product</h2>
-        <form encType="multipart/form-data" onSubmit={handleSubmit}>
+        <h2 className="text-2xl font-bold mb-4">Add Package</h2>
+        <form encType="multipart/form-data"
+          onSubmit={handleSubmit}
+        >
           <div className="mb-4">
-            <label htmlFor="title" className="block text-gray-700 font-bold mb-2">Title:</label>
-            <input type="text" id="title" name="title" value={formData.title} onChange={handleChange} className="w-full border rounded px-3 py-2" />
+            <label htmlFor="productName" className="block text-gray-700 font-bold mb-2">Package Name:</label>
+            <input type="text" id="productName" name="productName" value={formData.productName} onChange={handleChange} className="w-full border rounded px-3 py-2" />
           </div>
           <div className="mb-4">
-            <label htmlFor="description" className="block text-gray-700 font-bold mb-2">Description:</label>
-            <textarea id="description" name="description" value={formData.description} onChange={handleChange} rows="4" className="w-full border rounded px-3 py-2"></textarea>
+            <label htmlFor="productDescription" className="block text-gray-700 font-bold mb-2">Description:</label>
+            <textarea id="productDescription" name="productDescription" value={formData.productDescription} onChange={handleChange} rows="4" className="w-full border rounded px-3 py-2"></textarea>
           </div>
           <div className="mb-4">
-            <label htmlFor="price" className="block text-gray-700 font-bold mb-2">Price:</label>
-            <input type="text" id="price" name="price" value={formData.price} onChange={handleChange} step="0.01" className="w-full border rounded px-3 py-2" />
+            <label htmlFor="productPrice" className="block text-gray-700 font-bold mb-2">Price:</label>
+            <input type="text" id="productPrice" name="productPrice" value={
+              formData.productPrice} onChange={handleChange} step="0.01" className="w-full border rounded px-3 py-2" />
           </div>
-          <div className="mb-4">
-            <label htmlFor="quantity" className="block text-gray-700 font-bold mb-2">Quantity:</label>
-            <input type="text" id="quantity" name="quantity" value={formData.quantity} onChange={handleChange} className="w-full border rounded px-3 py-2" />
-          </div>
+
           <div className="mb-4">
             <label htmlFor="category" className="block text-gray-700 font-bold mb-2">Category:</label>
-            <select id="category" name="category" value={formData.category} onChange={handleChange} className="w-full border rounded px-3 py-2">
-              <option value="electronics">Electronics</option>
-              <option value="clothing">Clothing</option>
-              <option value="books">Books</option>
-              <option value="shoes">Shoes</option>
-              {/* Add more options as needed */}
+            <select id="category" name="category" value={formData.category._id} onChange={handleChange} className="w-full border rounded px-3 py-2">
+              {
+                categories.map((category) => (
+                  <option key={category._id} value={category._id}>{category.categoryName}</option>
+                ))
+              }
+
             </select>
           </div>
           <div className="mb-4">
@@ -98,26 +118,3 @@ function AddProducts() {
 }
 
 export default AddProducts
-
-
-
-// import axios from 'axios'
-// import React, { useEffect } from 'react'
-
-// function AddProducts() {
-    
-//     const axiosInstance = axios.create({
-//         baseURL: 'http://localhost:8000/api/v1/product',
-//         withCredentials: true
-//     });
-
-//     const onclickHandler = async() => {
-//         await axiosInstance.post("/add-product")
-//     }
-    
-//   return (
-//     <button onClick={onclickHandler}> add </button>
-//   )
-// }
-
-// export default AddProducts
