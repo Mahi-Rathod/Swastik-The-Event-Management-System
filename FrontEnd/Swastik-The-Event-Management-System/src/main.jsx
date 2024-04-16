@@ -26,7 +26,7 @@ const router = createBrowserRouter([{
     {path:'services', element:<Services />},
     {path:'contact', element:<Contact />},
     {path:'services/book-package', element:<Book />},
-    {path:'services/marriage', element:<MarriageEvents />},
+    {path:'services/event', element:<MarriageEvents />},
     {path:'login',element:<UserSignIn />},
     {path:'signup',element:<UserSignUp />},
     {path:'vendor-sign-in',element:<VendorSignIn/>},
