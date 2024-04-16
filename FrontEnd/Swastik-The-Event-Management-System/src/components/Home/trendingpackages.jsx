@@ -58,9 +58,9 @@ function TrendingPackages(){
     useEffect(() => {
         const fetchData = async () => {
             try {
-              const response = await axios.get('http://127.0.0.1:8000/api/products/');
-              console.log(response.data);
-              setProducts(response.data)
+              const response = await axios.get('http://localhost:8000/api/v1/product/get-product');
+              console.log(response.data.statusCode)
+              setProducts(response.data.data.products)
             } catch (error) {
               console.error('Error fetching data: ', error);
             }
@@ -77,7 +77,7 @@ function TrendingPackages(){
                 <div className="product-1">
                     {products.map((product)=>{
                         return(
-                            <Product key={product.name} img={product.image} name={product.name} desc={product.description} rate={product.price} sold={product.sold} />
+                            <Product key={product._id} img={product.productImage} name={product.productName} desc={product.productDescription} rate={product.productPrice} sold={product.productSold} />
                         )
                     })}
                 </div>

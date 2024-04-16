@@ -2,6 +2,9 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { BiSolidSkipPreviousCircle, BiSolidSkipNextCircle } from "react-icons/bi";
 import { Link } from 'react-router-dom';
+
+
+
 function FeaturedEvent({ data, eventType }) {
     let [index, setIndex] = useState(0);
     const prevBtn = () => {
@@ -44,7 +47,7 @@ function FeaturedEvent({ data, eventType }) {
                                 <p className='text-2xl no-underline hover:underline font-bold'>{data[index].name}</p>
                                 <p className='text-justify '>{data[index].review}</p>
                                 <button className='bg-indigo-500 text-white w-[7rem] text-sm px-2 py-1 rounded'>
-                                    <Link to='/services/marriage'>Learn More</Link>
+                                    <Link to='/services/event'>See More</Link>
                                 </button>
                             </div>
                         </div>

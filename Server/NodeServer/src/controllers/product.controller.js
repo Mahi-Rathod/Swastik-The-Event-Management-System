@@ -23,6 +23,7 @@ const addProduct = asyncHandler(async (req, res) => {
 
     const productImage = await uploadOnCloudinary(productImageLocalPath);
     
+    console.log(productImage)
     if(!productImage){
         throw new ApiError(
             400,
