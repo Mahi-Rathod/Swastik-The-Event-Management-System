@@ -68,14 +68,9 @@ function AddProducts() {
     catch (error) {
       console.log("something went wrong")
     }
-
-  }
-  const checkResponse = () => {
-    console.log(categories)
   }
   return (
     <div>
-      <button onClick={checkResponse}> click me</button>
       <div className="max-w-md mx-auto bg-white p-8 border shadow-lg rounded-lg">
         <h2 className="text-2xl font-bold mb-4">Add Package</h2>
         <form encType="multipart/form-data"
