@@ -1,44 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import img1 from "../../assets/birthday/birthday_1.jpeg"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { DiAtom } from "react-icons/di";
-
-const people = [
-    {
-      name: 'John Doe',
-      title: 'Front-end Developer',
-      department: 'Engineering'
-    },
-    {
-      name: 'Jane Doe',
-      title: 'Back-end Developer',
-      department: 'Engineering',
-    }
-  ]
+import Product from "../Products/product.jsx";
+import axios from 'axios'
+const details = {
+    eventType: "Weddings",
+    foodType: "Maharashtrian Food, South Indian Food, Chinese Food",
+    decorationType: "Floral Decorations, Baloon Decorations, Ethinic Decoration, Open Decoration",
+    subProgram: "Mehandi Ceremony, Sangeet Ceremony, Haldi Ceremony, Vidai Ceremony",
+    totalGuest: "500",
+}
 
 function Book() {
     const [startDate, setStartDate] = useState(new Date());
-    const [details, setDetails] = useState([
-        {
-            Locations: "Delhi",
-            Date: Date(),
-            Guest: 10,
-            Rooms: 5,
-            flight: {
-                from: "Aurangabad",
-                to: "Delhi"
-            },
-            Food: [],
-            Decoration: [],
-        }
-    ])
-    const change = ({ key, value }) => {
-        setDetails(key.value)
-    }
+
     const eventLocations = ['Nanded', 'Pune', 'Sambhajinagar', 'Delhi', 'Jaipur', 'utii', 'Bengaluru']
 
     const images = [img1, img1, img1, img1, img1]
+
+    const [products, setProducts] = useState([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('http://localhost:8000/api/v1/product/get-product');
+                console.log(response.data.statusCode)
+                setProducts(response.data.data.products)
+            } catch (error) {
+                console.error('Error fetching data: ', error);
+            }
+        };
+
+        fetchData();
+    }, [])
     return (
         <>
             <div className="bg-white w-[70%] h-[90vh] m-auto mt-5 shadow-xl rounded-md flex justify-evenly">
@@ -92,7 +88,7 @@ function Book() {
                 </div>
             </div>
 
-            <div className="mt-6 flex flex-col w-[70%] m-auto">
+            <div className="mt-6 flex flex-col w-[70%] m-auto font-serif">
                 <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden border border-gray-200 md:rounded-lg">
@@ -100,43 +96,92 @@ function Book() {
                                 <thead className="bg-gray-50">
                                     <tr className="divide-x divide-gray-200">
                                         <th
+                                            colspan="2"
                                             scope="col"
-                                            className="px-4 py-3.5 text-left text-sm font-normal text-gray-500"
+                                            className="px-4 py-3.5 text-center font-normal text-black text-2xl "
                                         >
-                                            <span>Package Details</span>
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-12 py-3.5 text-left text-sm font-normal text-gray-500"
-                                        >
-                                            Title
+                                            <span> Details </span>
                                         </th>
 
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200 bg-white">
-                                    {people.map((person) => (
-                                        <tr key={person.name} className="divide-x divide-gray-200">
-                                            <td className="whitespace-nowrap px-4 py-4">
-                                                <div className="flex items-center">
-                                                    <div className="ml-4">
-                                                        <div className="text-sm font-medium text-gray-900">{person.name}</div>
-                                                        <div className="text-sm text-gray-500">{person.email}</div>
-                                                    </div>
+
+                                    <tr className="divide-x divide-gray-200">
+                                        <td className="whitespace-nowrap px-4 py-4">
+                                            <div className="flex items-center">
+                                                <div className="ml-4">
+                                                    <div className="text-sm text-gray-900 font-semibold ">Event Type</div>
                                                 </div>
-                                            </td>
-                                            <td className="whitespace-nowrap px-12 py-4">
-                                                <div className="text-sm text-gray-900">{person.title}</div>
-                                                <div className="text-sm text-gray-500">{person.department}</div>
-                                            </td>
-                                            
-                                            
-                                        </tr>
-                                    ))}
+                                            </div>
+                                        </td>
+                                        <td className="whitespace-nowrap px-12 py-4">
+                                            <div className="text-sm text-gray-900 text-right">{details.eventType}</div>
+                                        </td>
+                                    </tr>
+                                    <tr className="divide-x divide-gray-200">
+                                        <td className="whitespace-nowrap px-4 py-4">
+                                            <div className="flex items-center">
+                                                <div className="ml-4">
+                                                    <div className="text-sm font-semibold text-gray-900">Food Type</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="whitespace-nowrap px-12 py-4">
+                                            <div className="text-sm text-gray-900 text-right">{details.foodType}</div>
+                                        </td>
+                                    </tr>
+                                    <tr className="divide-x divide-gray-200">
+                                        <td className="whitespace-nowrap px-4 py-4">
+                                            <div className="flex items-center">
+                                                <div className="ml-4">
+                                                    <div className="text-sm font-semibold text-gray-900">Decoration Type</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="whitespace-nowrap px-12 py-4">
+                                            <div className="text-sm text-gray-900 text-right">{details.decorationType}</div>
+                                        </td>
+                                    </tr>
+                                    <tr className="divide-x divide-gray-200">
+                                        <td className="whitespace-nowrap px-4 py-4">
+                                            <div className="flex items-center">
+                                                <div className="ml-4">
+                                                    <div className="text-sm font-semibold text-gray-900">Other Events</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="whitespace-nowrap px-12 py-4">
+                                            <div className="text-sm text-gray-900 text-right">{details.subProgram}</div>
+                                        </td>
+                                    </tr>
+                                    <tr className="divide-x divide-gray-200">
+                                        <td className="whitespace-nowrap px-4 py-4">
+                                            <div className="flex items-center">
+                                                <div className="ml-4">
+                                                    <div className="text-sm font-semibold text-gray-900">Total Guests</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="whitespace-nowrap px-12 py-4">
+                                            <div className="text-sm text-gray-900 text-right">{details.totalGuest}</div>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div className="mt-6 flex flex-col w-[70%] m-auto font-serif bg-white rounded">
+                <h3 className='text-center mt-3 text-2xl font-serif'> Other Packages</h3>
+                <div className="flex flex-nowrap gap-10 p-10">
+                    {products.map((product) => {
+                        return (
+                            <Product key={product._id} img={product.productImage} name={product.productName} desc={product.productDescription} rate={product.productPrice} sold={product.productSold} />
+                        )
+                    })}
                 </div>
             </div>
         </>
