@@ -4,7 +4,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { DiAtom } from "react-icons/di";
 import Product from "../Products/product.jsx";
+import {useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios'
+
 const details = {
     eventType: "Weddings",
     foodType: "Maharashtrian Food, South Indian Food, Chinese Food",
@@ -15,21 +17,37 @@ const details = {
 
 function Book() {
     const [startDate, setStartDate] = useState(new Date());
-
     const eventLocations = ['Nanded', 'Pune', 'Sambhajinagar', 'Delhi', 'Jaipur', 'utii', 'Bengaluru']
-
-    const images = [img1, img1, img1, img1, img1]
-
     const [products, setProducts] = useState([])
-
+    const [product, setProduct] = useState({
+        _id:"",
+        productName:"",
+        productDescription:"",
+        productImage : "",
+        productPrice :"",
+        productSold :""
+    })
+    const navigate = useNavigate()
+    const {id} = useParams()
+    const axiosInstance = axios.create({
+        baseURL: 'http://localhost:8000/api/v1/product',
+        withCredentials: true
+      });
+    console.log(product.productName)
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/v1/product/get-product');
-                console.log(response.data.statusCode)
-                setProducts(response.data.data.products)
+                const response = await axiosInstance.get(`/get-product-by-id/${id}`);
+                const statusCode = response.data.statusCode
+                if(statusCode === '401'){
+                    navigate('/login')
+                }
+                setProduct(response.data.data.product)
+                const res = await axiosInstance.get(`/get-products`);
+                setProducts(res.data.data.products)
             } catch (error) {
                 console.error('Error fetching data: ', error);
+                navigate('/login')
             }
         };
 
@@ -40,21 +58,21 @@ function Book() {
             <div className="bg-white w-[70%] h-[90vh] m-auto mt-5 shadow-xl rounded-md flex justify-evenly">
                 <div className="flex flex-col p-2 gap-3 w-[50%]">
                     <div className="h-[70%] p-8 w-[100%] bg-white shadow-md rounded-md flex justify-center">
-                        <img src={img1} alt="" className='h-[100%] rounded-md shadow-lg' />
+                        <img src={product.productImage} alt="" className='h-[100%] rounded-md shadow-lg' />
                     </div>
 
                     <div className="h-[30%] w-[100%] gap-5 flex flex-row items-center">
                         <div className='w-[50%] h-[50%] shadow-lg p-4 rounded-md'>
-                            <img src={img1} alt="" className='w-[100%] h-[100%] shadow-lg  rounded-md' />
+                            <img src={product.productImage} alt="" className='w-[100%] h-[100%] shadow-lg  rounded-md' />
                         </div>
                         <div className='w-[50%] h-[50%] shadow-lg p-4 rounded-md'>
-                            <img src={img1} alt="" className='w-[100%] h-[100%] shadow-lg  rounded-md' />
+                            <img src={product.productImage} alt="" className='w-[100%] h-[100%] shadow-lg  rounded-md' />
                         </div>
                         <div className='w-[50%] h-[50%] shadow-lg p-4 rounded-md'>
-                            <img src={img1} alt="" className='w-[100%] h-[100%] shadow-lg  rounded-md' />
+                            <img src={product.productImage} alt="" className='w-[100%] h-[100%] shadow-lg  rounded-md' />
                         </div>
                         <div className='w-[50%] h-[50%] shadow-lg p-4 rounded-md'>
-                            <img src={img1} alt="" className='w-[100%] h-[100%] shadow-lg  rounded-md' />
+                            <img src={product.productImage} alt="" className='w-[100%] h-[100%] shadow-lg  rounded-md' />
                         </div>
 
                     </div>
@@ -62,10 +80,13 @@ function Book() {
 
                 <div className="w-[40%] flex flex-col justify-between">
                     <div className="p-5 w-[100%] h-[70%] flex flex-col justify-evenly">
-                        <h3 className='text-2xl font-sans text-black-600 text-justify'> Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                        <p className='text-sm font-sans text-black-600 text-justify'> Politics is a complex and multifaceted realm that encompasses the activities, beliefs, and institutions through which groups of people make collective decisions.
+                        <h3 className='text-2xl font-sans text-black-600 text-justify'>
+                            {product.productName}
+                        </h3>
+                        <p className='text-sm font-sans text-black-600 text-justify'>
+                            {product.productDescription}
                         </p>
-                        <h3 className='text-3xl font-bold font-mono text-black-600'> Price : ₹ 40000 /- </h3>
+                        <h3 className='text-3xl font-bold font-mono text-black-600'> Price : ₹ {product.productPrice} /- </h3>
                         <div className='font-sans w-[100%] flex gap-4'>
                             <p className='text-md font-semibold'>Function Date : </p>
                             <DatePicker
@@ -96,7 +117,7 @@ function Book() {
                                 <thead className="bg-gray-50">
                                     <tr className="divide-x divide-gray-200">
                                         <th
-                                            colspan="2"
+                                            colSpan="2"
                                             scope="col"
                                             className="px-4 py-3.5 text-center font-normal text-black text-2xl "
                                         >
@@ -179,7 +200,7 @@ function Book() {
                 <div className="flex flex-nowrap gap-10 p-10">
                     {products.map((product) => {
                         return (
-                            <Product key={product._id} img={product.productImage} name={product.productName} desc={product.productDescription} rate={product.productPrice} sold={product.productSold} />
+                            <Product key={product._id} id={product._id} img={product.productImage} name={product.productName} desc={product.productDescription} rate={product.productPrice} sold={product.productSold} />
                         )
                     })}
                 </div>
