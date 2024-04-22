@@ -97,7 +97,7 @@ body{
 }
 
 .item .content button:hover{
-    background-color: #61fce7ee;
+    background-color: orange;
 
 }
 
@@ -131,8 +131,8 @@ body{
     cursor: pointer;
     opacity: 0.8;
     transition: all 0.5s;
-    border-radius: 100%;
-    color: #757373;
+    border-radius: 50%;
+    color:black;
 }
 .buttons button:hover{
     /* background: #ffffffbb; */

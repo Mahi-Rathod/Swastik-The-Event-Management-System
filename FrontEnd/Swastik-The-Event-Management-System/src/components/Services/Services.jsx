@@ -1,3 +1,4 @@
+//import mages for wedding
 import wedding_1 from '../../assets/marriage/wedding_1.jpg'
 import wedding_2 from '../../assets/marriage/wedding_2.jpg'
 import wedding_3 from '../../assets/marriage/wedding_3.jpg'
