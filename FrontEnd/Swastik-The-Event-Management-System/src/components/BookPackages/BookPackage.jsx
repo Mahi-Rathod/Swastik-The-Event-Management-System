@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { DiAtom } from "react-icons/di";
@@ -14,12 +14,31 @@ const details = {
     totalGuest: "500",
 }
 
+
+const axiosInstance = axios.create({
+    baseURL: 'http://localhost:8000/api/v1/product',
+    withCredentials: true
+});
+
+const axiosInstanceCategory = axios.create({
+    baseURL: 'http://localhost:8000/api/v1/category',
+    withCredentials: true
+});
+
 function Book() {
+        
+    const targetRef = useRef(null);
+    const navigate = useNavigate()
+    const { id } = useParams()
+
     const [startDate, setStartDate] = useState(new Date());
     const [viewDetails, setViewDetails] = useState(false)
+    const [isBook, setIsBook] = useState(false);
+    const [address, setAddress] = useState();
     const eventLocations = ['Nanded', 'Pune', 'Sambhajinagar', 'Delhi', 'Jaipur', 'utii', 'Bengaluru']
     const [eventType, setEventType] = useState("")
     const [products, setProducts] = useState([])
+
     const [product, setProduct] = useState({
         _id: "",
         productName: "",
@@ -34,18 +53,13 @@ function Book() {
         totalGuests: ""
     })
 
-    const navigate = useNavigate()
-    const { id } = useParams()
+    const [FormData, setFormData] = useState({
+        orderPrice : product.productPrice,
+        address : address,
+        functionDate : startDate
+    })
 
-    const axiosInstance = axios.create({
-        baseURL: 'http://localhost:8000/api/v1/product',
-        withCredentials: true
-    });
 
-    const axiosInstanceCategory = axios.create({
-        baseURL: 'http://localhost:8000/api/v1/category',
-        withCredentials: true
-    });
 
     useEffect(() => {
         const fetchData = async () => {
@@ -72,6 +86,7 @@ function Book() {
         fetchData();
     }, [])
 
+
     const handleChangeDate = (date) => {
         const currentDate = new Date();
         const minDate = new Date();
@@ -84,11 +99,30 @@ function Book() {
         }
     }
 
-    const handleDetail = async() => {
+
+    const handleDetail = async () => {
         const categories = await axiosInstanceCategory.get(`/get-categorybyid/${product.category}`)
         setEventType(categories.data.data.category.categoryName)
         setViewDetails(!viewDetails);
+        targetRef.current.scrollIntoView({ behavior: 'smooth' });
     }
+
+    const scrollToDetails = () => {
+        if (viewDetails === false) {
+            handleDetail();
+        }
+        setIsBook(!isBook);
+        targetRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    const checkOutPackage = async() =>{
+        const requestData = new FormData();
+        requestData.append("orderPrice", product.productPrice)
+        requestData.append("address", address)
+        requestData.append("functionDate", startDate)
+
+    }
+
     return (
         <>
             <div className="bg-white w-[70%] h-[90vh] m-auto mt-5 shadow-xl rounded-md flex justify-evenly">
@@ -133,8 +167,19 @@ function Book() {
                         </div>
                         <div className='flex justify-start gap-4 w-[100%]'>
                             <button className='w-[30%] bg-blue-500'> Send Query</button>
-                            <button className='w-[30%] bg-blue-200 font-thin border-solid border-blue-600 border-[1px] text-blue-600'> BOOK NOW</button>
+                            <button className='w-[30%] bg-blue-200 font-thin border-solid border-blue-600 border-[1px] text-blue-600' onClick={scrollToDetails}> BOOK NOW</button>
 
+                        </div>
+                        <div className='font-sans w-[100%] flex gap-4'>
+                            <label htmlFor="address" className="block text-gray-700 font-bold mb-2">Event Place:</label>
+                            <select id="address" name="address" value="address"  className="w-full border rounded px-3 py-2">
+                                {
+                                    eventLocations.map((location) => (
+                                        <option key={location} value={location}>{location}</option>
+                                    ))
+                                }
+
+                            </select>
                         </div>
                         <div className='flex justify-start items-end text-[0.8em] text-red-500 font-mono font-bold cursor-pointer' onClick={handleDetail}> view Details </div>
                     </div>
@@ -148,21 +193,23 @@ function Book() {
             </div>
 
             {viewDetails &&
-                <div className="mt-6 flex flex-col w-[70%] m-auto font-serif">
+                <div ref={targetRef} className="mt-6 flex flex-col w-[70%] m-auto font-serif">
                     <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                             <div className="overflow-hidden border border-gray-200 md:rounded-lg">
                                 <table className="min-w-full divide-y divide-gray-200">
                                     <thead className="bg-gray-50">
-                                        <tr className="divide-x divide-gray-200">
+                                        <tr>
                                             <th
                                                 colSpan="2"
                                                 scope="col"
                                                 className="px-4 py-3.5 text-center font-normal text-black text-2xl "
                                             >
-                                                <span> Details </span>
+                                                <div className='w-[100%] flex justify-evenly'>
+                                                    <span className='w-[80%]'> Details </span>
+                                                    <span className='w-[20%] text-right font-mono font-bold text-red-500' onClick={handleDetail}> x </span>
+                                                </div>
                                             </th>
-
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200 bg-white">
@@ -227,6 +274,18 @@ function Book() {
                                                 <div className="text-sm text-gray-900 text-right">{details.totalGuest}</div>
                                             </td>
                                         </tr>
+
+                                        {isBook &&
+                                            <tr>
+                                                <th
+                                                    colSpan="2"
+                                                    scope="col"
+                                                    className="px-4 py-3.5 text-center font-normal text-black text-2xl "
+                                                >
+                                                    <button onClick={checkOutPackage}> Proceed </button>
+                                                </th>
+                                            </tr>
+                                        }
                                     </tbody>
                                 </table>
                             </div>
