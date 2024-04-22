@@ -25,6 +25,10 @@ const userSchema = new Schema({
         type: String,
         required: [true, "Password is Required"],
     },
+    isVendor :{
+        type : Boolean,
+        required: true
+    },
     refreshToken :{
         type : String,
     }

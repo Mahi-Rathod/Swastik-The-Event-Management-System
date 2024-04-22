@@ -1,9 +1,7 @@
 import './product.css'
-import { RiShareCircleLine } from "react-icons/ri";
 import { FaRegHeart } from "react-icons/fa";
-import { Link,useNavigate} from 'react-router-dom';
-import { useState } from 'react';
-function Product({img,name,desc,rate,sold}){
+import { Link} from 'react-router-dom';
+function Product({id,img,name,desc,rate,sold}){
     return(
         <>
         <div className="product-container" style={{backgroundImage:`url(${img})`}}>
@@ -14,7 +12,7 @@ function Product({img,name,desc,rate,sold}){
                     <p>{sold}</p>
                     <p>{rate}</p>
                 </div>
-                <button className='Book-Now'> <Link to={`services/book-package`}>Book</Link></button>
+                <button className='Book-Now'> <Link to={`services/book-package/${id}`}>Book</Link></button>
             </div>
             <div className="product-details">
                 <div className="name-heart">

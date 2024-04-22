@@ -1,21 +1,47 @@
-import React, { useEffect } from 'react'
-import { NavLink,useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
 import girlimg from '../../assets/logingirl.jpg'
-import { useState } from 'react'
 import axios from "axios"
 import './login.css'
-import { useDispatch,useSelector} from 'react-redux'
-import { login } from '../../Store/authSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { loginSuccess } from '../../Store/authSlice'
+
 function UserSignIn() {
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const checkAuth = useSelector((state) => state.authentication.status);
   const [registerData, setRegisterData] = useState({
-    email : "",
-    phone:"",
-    password:"",
+    mobileNumber: "",
+    password: "",
   })
-  const handleChange = (e) =>{
+
+//Checking if UserHas Logged in Already
+  const axiosInstance = axios.create({
+    baseURL: 'http://localhost:8000/api/v1/users',
+    withCredentials: true
+  });
+
+  useEffect(() => {
+
+    async function fetchData() {
+      try {
+        const response = await axiosInstance.get('/getUser');
+        if (response.data.statusCode === 200) {
+          dispatch(loginSuccess());
+          navigate('/');
+        }
+      }
+      catch (error) {
+        navigate('/login')
+      }
+
+    }
+    fetchData()
+  }, [navigate, checkAuth])
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setRegisterData({
       ...registerData,
@@ -23,15 +49,14 @@ function UserSignIn() {
     });
   }
 
-  const handleSubmit = async (e) =>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await axios.post('http://127.0.0.1:8000/Authentication/login/', registerData);
-      console.log(response.data); // Assuming your API returns a success message or user data upon successful registration
-      // Reset form data after successful registration
-      if(response.data.status === '200'){
-        alert("Logged In");
-        dispatch(login());
+      const response = await axiosInstance.post('/login', registerData, { withCredentials: true });
+
+      if (response.data.statusCode === 200) {
+        dispatch(loginSuccess());
         navigate('/');
       }
     } catch (error) {
@@ -41,7 +66,6 @@ function UserSignIn() {
 
   return (
     <div className='w-[90%] h-[90vh] m-auto flex justify-center items-center'>
-    {/* <h1>{fetchResult}</h1> */}
       <div className='w-[80%] h-[80vh] flex gap-2'>
         <div className='w-2/4 h-full rounded bg-white flex justify-center items-center'>
           <img src={girlimg} alt="" />
@@ -55,22 +79,14 @@ function UserSignIn() {
           <div className='p-5 rounded drop-shadow-md'>
             <form className='flex flex-col gap-2' onSubmit={handleSubmit}>
               <div className="input-box">
-                <input type="email" name="email"
-                  value={registerData.email}
+                <input type="text" name="mobileNumber"
+                  value={registerData.mobileNumber}
                   onChange={handleChange}
                   required
                 />
-                <span>Email</span>
+                <span>mobileNumber</span>
               </div>
 
-              <div className="input-box">
-                <input type="text" name="phone"
-                  value={registerData.phone}
-                  onChange={handleChange}
-                  required
-                />
-                <span>Mobile Number</span>
-              </div>
 
               <div className="input-box">
                 <input type="password" name="password"
@@ -80,7 +96,7 @@ function UserSignIn() {
                 />
                 <span>Password</span>
               </div>
-              
+
               <div className='submit-btn'>
                 <button>Login</button>
               </div>

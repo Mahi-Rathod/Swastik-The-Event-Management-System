@@ -11,56 +11,12 @@ import { useEffect,useState } from 'react';
 
 function TrendingPackages(){
     const [products, setProducts] = useState([])
-    // const products = [
-    //     {
-    //         img:img1, 
-    //         name:"Bark-Birthday",
-    //         desc:"Bark Birthday Cakes, Celebrations, Drinks, Caters and many mores.",
-    //         rate:"₹9,999/-",
-    //         sold:"200+"
-    //     },
-    //     {
-    //         img :img2,
-    //         name:"Corporate Dinner Party",
-    //         desc:"Bark Birthday Cakes, Celebrations, Drinks, Caters and many mores.",
-    //         rate:"₹20,000/-",
-    //         sold:"200+"
-    //     },
-    //     {
-    //         img :img3,
-    //         name:"New Diamond Year",
-    //         desc:"Bark Birthday Cakes, Celebrations, Drinks, Caters and many mores.",
-    //         rate:"₹20,999/-",
-    //         sold:"200+",
-    //     },
-    //     {
-    //         img :img11,
-    //         name:"Destination-Wedding",
-    //         desc:"Crafting Jaipur Dreams, where love meets Royalty",
-    //         rate:"₹59,99,999/-",
-    //         sold:"200+",
-    //     },
-    //     {
-    //         img :img5,
-    //         name:"Dj-Concert",
-    //         desc:"Bark Birthday Cakes, Celebrations, Drinks, Caters and many mores.",
-    //         rate:"₹51,099/-",
-    //         sold:"200+",
-    //     },
-    //     {
-    //         img :img6,
-    //         name:"Aniversary-Heart",
-    //         desc:"Bark Birthday Cakes, Celebrations, Drinks, Caters and many mores.",
-    //         rate:"₹50,000/-",
-    //         sold:"200+",
-    //     }  
-    // ]
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-              const response = await axios.get('http://127.0.0.1:8000/api/products/');
-              console.log(response.data);
-              setProducts(response.data)
+              const response = await axios.get('http://localhost:8000/api/v1/product/get-products');
+              setProducts(response.data.data.products)
             } catch (error) {
               console.error('Error fetching data: ', error);
             }
@@ -77,7 +33,7 @@ function TrendingPackages(){
                 <div className="product-1">
                     {products.map((product)=>{
                         return(
-                            <Product key={product.name} img={product.image} name={product.name} desc={product.description} rate={product.price} sold={product.sold} />
+                            <Product key={product._id} id={product._id} img={product.productImage} name={product.productName} desc={product.productDescription} rate={product.productPrice} sold={product.productSold} />
                         )
                     })}
                 </div>
