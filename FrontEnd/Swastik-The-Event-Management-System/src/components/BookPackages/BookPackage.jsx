@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { DiAtom } from "react-icons/di";
 import Product from "../Products/product.jsx";
-import {useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios'
 
 const details = {
@@ -20,28 +20,31 @@ function Book() {
     const eventLocations = ['Nanded', 'Pune', 'Sambhajinagar', 'Delhi', 'Jaipur', 'utii', 'Bengaluru']
     const [products, setProducts] = useState([])
     const [product, setProduct] = useState({
-        _id:"",
-        productName:"",
-        productDescription:"",
-        productImage : "",
-        productPrice :"",
-        productSold :""
+        _id: "",
+        productName: "",
+        productDescription: "",
+        productImage: "",
+        productPrice: "",
+        productSold: ""
     })
+
     const navigate = useNavigate()
-    const {id} = useParams()
+    const { id } = useParams()
+
     const axiosInstance = axios.create({
         baseURL: 'http://localhost:8000/api/v1/product',
         withCredentials: true
-      });
-    console.log(product.productName)
+    });
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axiosInstance.get(`/get-product-by-id/${id}`);
                 const statusCode = response.data.statusCode
-                if(statusCode === '401'){
+                if (statusCode === '401') {
                     navigate('/login')
                 }
+                console.log(response)
                 setProduct(response.data.data.product)
                 const res = await axiosInstance.get(`/get-products`);
                 setProducts(res.data.data.products)
@@ -53,6 +56,19 @@ function Book() {
 
         fetchData();
     }, [])
+
+    const handleChangeDate = (date) => {
+        const currentDate = new Date();
+        const minDate = new Date();
+        minDate.setDate(currentDate.getDate() + 20)
+        if (date > minDate) {
+            setStartDate(date);
+        }
+        else {
+            alert("Function Date must be 20 days after today..")
+        }
+    }
+
     return (
         <>
             <div className="bg-white w-[70%] h-[90vh] m-auto mt-5 shadow-xl rounded-md flex justify-evenly">
@@ -91,7 +107,7 @@ function Book() {
                             <p className='text-md font-semibold'>Function Date : </p>
                             <DatePicker
                                 selected={startDate}
-                                onChange={(date) => setStartDate(date)}
+                                onChange={handleChangeDate}
                                 className='rounded font-mono w-[50%] px-2 bg-blue-500 text-white'
                             />
                         </div>
@@ -121,7 +137,7 @@ function Book() {
                                             scope="col"
                                             className="px-4 py-3.5 text-center font-normal text-black text-2xl "
                                         >
-                                            <span> Details </span>
+                                            <span> Details </span>  
                                         </th>
 
                                     </tr>
@@ -137,7 +153,7 @@ function Book() {
                                             </div>
                                         </td>
                                         <td className="whitespace-nowrap px-12 py-4">
-                                            <div className="text-sm text-gray-900 text-right">{details.eventType}</div>
+                                            <div className="text-sm text-gray-900 text-right">{}</div>
                                         </td>
                                     </tr>
                                     <tr className="divide-x divide-gray-200">

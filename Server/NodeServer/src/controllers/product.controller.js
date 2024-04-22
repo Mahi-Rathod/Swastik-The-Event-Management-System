@@ -3,6 +3,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { Product } from "../models/product.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { ProductCategory } from "../models/productCategory.model.js"
 
 const addProduct = asyncHandler(async (req, res) => {
     const { productName, productDescription, productPrice, category } = req.body;
@@ -31,12 +32,20 @@ const addProduct = asyncHandler(async (req, res) => {
         )
     }
 
+    const categoryObj = await ProductCategory.findById(category);
+    if(!categoryObj){
+        throw new ApiError(
+            501,
+            "Something went wrong..."
+        )
+    }
+
 
     const product = await Product.create({
         productName,
         productDescription,
         productPrice,
-        category,
+        category : categoryObj,
         productImage : productImage.url,
         owner: user,
     });
