@@ -18,8 +18,8 @@ export default function Contact() {
         <div>
             <div className="mx-auto max-w-7xl px-4">
                 <div className="flex flex-col space-y-8 pb-1 pt-1 md:pt-1">
-                    <div className="mx-auto max-w-max rounded-full border bg-gray-50  px-3">
-                        <p className="text-center text-xs font-semibold leading-normal md:text-sm">
+                    <div className="mx-auto max-w-max rounded-full border bg-gray-50  px-3 ">
+                        <p className="text-center text-xs font-semibold leading-normal md:text-sm" >
                             Share your thoughts
                         </p>
                     </div>  
