@@ -51,12 +51,33 @@ const getCategories = asyncHandler(async(req, res) => {
     } catch (error) {
         throw new ApiError(
             500,
-            "Something Went Wrong While Retrieving Products.."
+            "Something Went Wrong While Retrieving Categories.."
+        )
+    }
+})
+
+const getCategoriesById = asyncHandler(async(req, res) => {
+    try {
+        console.log(req.params.id)
+        const category = await ProductCategory.findById(req.params.id)
+        return res
+            .status(200)
+            .json(
+                new ApiResponse(
+                    200,
+                    { category }
+                )
+            )
+    } catch (error) {
+        throw new ApiError(
+            500,
+            "Something Went Wrong"
         )
     }
 })
 
 export {
     addCategories,
-    getCategories
+    getCategories,
+    getCategoriesById
 }
