@@ -35,7 +35,8 @@ function UserSignUp() {
       let tuple = [' ', 'A', 'B', 'C', 'D', 'E', 
       'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
-      console.log(fullName.length)
+      let number=['0','1','2','3','4','5','6','7','8','9'];
+
       for(let i=0; i<fullName.length;i++){
         if(!tuple.includes(fullName[i])){
           alert("Name should only be alphabets");
@@ -43,10 +44,22 @@ function UserSignUp() {
         }
       }
 
-      var passw=  /^[A-Za-z]\w{7,14}$/;
+      var passw=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{4,15}$/;
       if(!registerData.password.match(passw)){
         alert("password should contain alphabets, numerics");
         throw error;
+      }
+
+      let mobileNumber = registerData.mobileNumber
+      if(mobileNumber.length!=10){
+        alert("Please Enter valid Mobile Number");
+        throw error;
+      }
+      for(let i=0; i<mobileNumber.length;i++){
+        if(!number.includes(mobileNumber[i])){
+          alert("Please Enter Correct Mobile Number");
+          throw error;
+        }
       }
 
       const response = await axios.post('http://localhost:8000/api/v1/users/register', registerData);
