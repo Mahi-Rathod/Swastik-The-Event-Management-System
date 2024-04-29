@@ -28,8 +28,8 @@ const axiosInstanceCategory = axios.create({
 function Book() {
 
     const targetRef = useRef(null);
-    const navigate = useNavigate()
-    const { id } = useParams()
+    const navigate = useNavigate();
+    const { id } = useParams();
 
     const [startDate, setStartDate] = useState(new Date());
     const [isBook, setIsBook] = useState(false);
@@ -96,7 +96,7 @@ function Book() {
         if (product.category) {
             fetchCategory();
         }
-    }, [product.category])
+    }, [product.category, product._id, id])
 
 
     const handleChangeDate = (date) => {
