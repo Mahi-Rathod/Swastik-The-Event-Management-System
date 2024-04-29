@@ -31,12 +31,30 @@ function UserSignUp() {
     }
     try {
       console.log(registerData)
+      let fullName = registerData.fullName.toUpperCase();
+      let tuple = [' ', 'A', 'B', 'C', 'D', 'E', 
+      'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+      console.log(fullName.length)
+      for(let i=0; i<fullName.length;i++){
+        if(!tuple.includes(fullName[i])){
+          alert("Name should only be alphabets");
+          throw error;
+        }
+      }
+
+      var passw=  /^[A-Za-z]\w{7,14}$/;
+      if(!registerData.password.match(passw)){
+        alert("password should contain alphabets, numerics");
+        throw error;
+      }
+
       const response = await axios.post('http://localhost:8000/api/v1/users/register', registerData);
       console.log(response.data); // Assuming API returns a success message or user data upon successful registration
       // Reset form data after successful registration
       if(response.data.statusCode === 200){
         alert("Account Created Successfully");
-        navigate('/login');
+        navigate('/login'); 
       }
       setPasswordMatchError('');
     } catch (error) {
