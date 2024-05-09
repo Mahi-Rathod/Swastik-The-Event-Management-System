@@ -47,7 +47,6 @@ const bookPackage = asyncHandler(async(req, res)=>{
                 "Your Order Placed SuccessFully..."
             )
         )
-
 });
 
 export {

@@ -20,12 +20,19 @@ const router = createBrowserRouter([{
   element:<Layout />,
   children:[
     {path:'', element:<Home />},
-    // {path:'', element:<UserSignIn />},
-    // {path:'home', element:<Home />},
     {path:'about-us', element:<About />},
     {path:'services', element:<Services />},
     {path:'contact', element:<Contact />},
-    {path:'services/book-package/:id', element:<Book />},
+    // {path:'services/book-package/:id', element:<Book />},
+    {
+      path:'services/book-package',
+      element:<Book />,
+      children:[
+        {
+          path:':id'
+        }
+      ]
+    },
     {path:'services/event', element:<MarriageEvents />},
     {path:'login',element:<UserSignIn />},
     {path:'signup',element:<UserSignUp />},

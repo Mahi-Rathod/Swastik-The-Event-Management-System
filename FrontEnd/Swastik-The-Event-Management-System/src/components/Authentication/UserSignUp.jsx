@@ -31,12 +31,43 @@ function UserSignUp() {
     }
     try {
       console.log(registerData)
+      let fullName = registerData.fullName.toUpperCase();
+      let tuple = [' ', 'A', 'B', 'C', 'D', 'E', 
+      'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+      let number=['0','1','2','3','4','5','6','7','8','9'];
+
+      for(let i=0; i<fullName.length;i++){
+        if(!tuple.includes(fullName[i])){
+          alert("Name should only be alphabets");
+          throw error;
+        }
+      }
+
+      var passw=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{4,15}$/;
+      if(!registerData.password.match(passw)){
+        alert("password should contain alphabets, numerics");
+        throw error;
+      }
+
+      let mobileNumber = registerData.mobileNumber
+      if(mobileNumber.length!=10){
+        alert("Please Enter valid Mobile Number");
+        throw error;
+      }
+      for(let i=0; i<mobileNumber.length;i++){
+        if(!number.includes(mobileNumber[i])){
+          alert("Please Enter Correct Mobile Number");
+          throw error;
+        }
+      }
+
       const response = await axios.post('http://localhost:8000/api/v1/users/register', registerData);
       console.log(response.data); // Assuming API returns a success message or user data upon successful registration
       // Reset form data after successful registration
       if(response.data.statusCode === 200){
         alert("Account Created Successfully");
-        navigate('/login');
+        navigate('/login'); 
       }
       setPasswordMatchError('');
     } catch (error) {

@@ -26,13 +26,12 @@ const axiosInstanceCategory = axios.create({
 });
 
 function Book() {
-        
+
     const targetRef = useRef(null);
-    const navigate = useNavigate()
-    const { id } = useParams()
+    const navigate = useNavigate();
+    const { id } = useParams();
 
     const [startDate, setStartDate] = useState(new Date());
-    const [viewDetails, setViewDetails] = useState(false)
     const [isBook, setIsBook] = useState(false);
     const [address, setAddress] = useState();
     const eventLocations = ['Nanded', 'Pune', 'Sambhajinagar', 'Delhi', 'Jaipur', 'utii', 'Bengaluru']
@@ -54,9 +53,9 @@ function Book() {
     })
 
     const [FormData, setFormData] = useState({
-        orderPrice : product.productPrice,
-        address : address,
-        functionDate : startDate
+        orderPrice: product.productPrice,
+        address: address,
+        functionDate: startDate
     })
 
 
@@ -83,8 +82,21 @@ function Book() {
             }
         };
 
+
+        const fetchCategory = async () => {
+            try {
+                const categories = await axiosInstanceCategory.get(`/get-categorybyid/${product.category}`)
+                setEventType(categories.data.data.category.categoryName)
+            } catch (error) {
+                console.log("problem occured : - ", error)
+            }
+        }
+
         fetchData();
-    }, [])
+        if (product.category) {
+            fetchCategory();
+        }
+    }, [product.category, product._id, id])
 
 
     const handleChangeDate = (date) => {
@@ -99,28 +111,25 @@ function Book() {
         }
     }
 
-
-    const handleDetail = async () => {
-        const categories = await axiosInstanceCategory.get(`/get-categorybyid/${product.category}`)
-        setEventType(categories.data.data.category.categoryName)
-        setViewDetails(!viewDetails);
-        targetRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-
     const scrollToDetails = () => {
-        if (viewDetails === false) {
-            handleDetail();
+        if (isBook === false) {
+            setIsBook(!isBook);
         }
-        setIsBook(!isBook);
+
         targetRef.current.scrollIntoView({ behavior: 'smooth' });
     }
 
-    const checkOutPackage = async() =>{
+
+    const handleChangeLocation = (e) => {
+        const { value } = e.target
+        setAddress(value)
+    }
+
+    const checkOutPackage = async () => {
         const requestData = new FormData();
         requestData.append("orderPrice", product.productPrice)
         requestData.append("address", address)
         requestData.append("functionDate", startDate)
-
     }
 
     return (
@@ -172,7 +181,7 @@ function Book() {
                         </div>
                         <div className='font-sans w-[100%] flex gap-4'>
                             <label htmlFor="address" className="block text-gray-700 font-bold mb-2">Event Place:</label>
-                            <select id="address" name="address" value="address"  className="w-full border rounded px-3 py-2">
+                            <select id="address" name="address" value={address} onChange={handleChangeLocation} className="w-full border rounded px-3 py-2">
                                 {
                                     eventLocations.map((location) => (
                                         <option key={location} value={location}>{location}</option>
@@ -181,7 +190,7 @@ function Book() {
 
                             </select>
                         </div>
-                        <div className='flex justify-start items-end text-[0.8em] text-red-500 font-mono font-bold cursor-pointer' onClick={handleDetail}> view Details </div>
+                        <div className='flex justify-start items-end text-[0.8em] text-red-500 font-mono font-bold cursor-pointer' onClick={scrollToDetails}> view Details </div>
                     </div>
 
                     <div className='h-[20%] flex items-center font-serif'>
@@ -192,107 +201,105 @@ function Book() {
                 </div>
             </div>
 
-            {viewDetails &&
-                <div ref={targetRef} className="mt-6 flex flex-col w-[70%] m-auto font-serif">
-                    <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                        <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                            <div className="overflow-hidden border border-gray-200 md:rounded-lg">
-                                <table className="min-w-full divide-y divide-gray-200">
-                                    <thead className="bg-gray-50">
+            <div className="mt-6 flex flex-col w-[70%] m-auto font-serif">
+                <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                        <div className="overflow-hidden border border-gray-200 md:rounded-lg">
+                            <table className="min-w-full divide-y divide-gray-200">
+                                <thead className="bg-gray-50">
+                                    <tr>
+                                        <th
+                                            colSpan="2"
+                                            scope="col"
+                                            className="px-4 py-3.5 text-center font-normal text-black text-2xl "
+                                        >
+                                            <div className='w-[100%] flex justify-evenly'>
+                                                <span ref={targetRef} className='w-[80%]'> Details </span>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-gray-200 bg-white">
+
+                                    <tr className="divide-x divide-gray-200">
+                                        <td className="whitespace-nowrap px-4 py-4">
+                                            <div className="flex items-center">
+                                                <div className="ml-4">
+                                                    <div className="text-sm text-gray-900 font-semibold ">Event Type</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="whitespace-nowrap px-12 py-4">
+                                            <div className="text-sm text-gray-900 text-right">{eventType}</div>
+                                        </td>
+                                    </tr>
+                                    <tr className="divide-x divide-gray-200">
+                                        <td className="whitespace-nowrap px-4 py-4">
+                                            <div className="flex items-center">
+                                                <div className="ml-4">
+                                                    <div className="text-sm font-semibold text-gray-900">Food Type</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="whitespace-nowrap px-12 py-4">
+                                            <div className="text-sm text-gray-900 text-right">{product.foodType}</div>
+                                        </td>
+                                    </tr>
+                                    <tr className="divide-x divide-gray-200">
+                                        <td className="whitespace-nowrap px-4 py-4">
+                                            <div className="flex items-center">
+                                                <div className="ml-4">
+                                                    <div className="text-sm font-semibold text-gray-900">Decoration Type</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="whitespace-nowrap px-12 py-4">
+                                            <div className="text-sm text-gray-900 text-right">{product.decorationType}</div>
+                                        </td>
+                                    </tr>
+                                    <tr className="divide-x divide-gray-200">
+                                        <td className="whitespace-nowrap px-4 py-4">
+                                            <div className="flex items-center">
+                                                <div className="ml-4">
+                                                    <div className="text-sm font-semibold text-gray-900">Other Events</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="whitespace-nowrap px-12 py-4">
+                                            <div className="text-sm text-gray-900 text-right">{product.otherEvents}</div>
+                                        </td>
+                                    </tr>
+                                    <tr className="divide-x divide-gray-200">
+                                        <td className="whitespace-nowrap px-4 py-4">
+                                            <div className="flex items-center">
+                                                <div className="ml-4">
+                                                    <div className="text-sm font-semibold text-gray-900">Total Guests</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="whitespace-nowrap px-12 py-4">
+                                            <div className="text-sm text-gray-900 text-right">{details.totalGuest}</div>
+                                        </td>
+                                    </tr>
+
+                                    {isBook &&
                                         <tr>
                                             <th
                                                 colSpan="2"
                                                 scope="col"
                                                 className="px-4 py-3.5 text-center font-normal text-black text-2xl "
                                             >
-                                                <div className='w-[100%] flex justify-evenly'>
-                                                    <span className='w-[80%]'> Details </span>
-                                                    <span className='w-[20%] text-right font-mono font-bold text-red-500' onClick={handleDetail}> x </span>
-                                                </div>
+                                                <button onClick={checkOutPackage} className='w-[15%] bg-blue-500'> Proceed to Book</button>
                                             </th>
                                         </tr>
-                                    </thead>
-                                    <tbody className="divide-y divide-gray-200 bg-white">
-
-                                        <tr className="divide-x divide-gray-200">
-                                            <td className="whitespace-nowrap px-4 py-4">
-                                                <div className="flex items-center">
-                                                    <div className="ml-4">
-                                                        <div className="text-sm text-gray-900 font-semibold ">Event Type</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="whitespace-nowrap px-12 py-4">
-                                                <div className="text-sm text-gray-900 text-right">{eventType}</div>
-                                            </td>
-                                        </tr>
-                                        <tr className="divide-x divide-gray-200">
-                                            <td className="whitespace-nowrap px-4 py-4">
-                                                <div className="flex items-center">
-                                                    <div className="ml-4">
-                                                        <div className="text-sm font-semibold text-gray-900">Food Type</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="whitespace-nowrap px-12 py-4">
-                                                <div className="text-sm text-gray-900 text-right">{product.foodType}</div>
-                                            </td>
-                                        </tr>
-                                        <tr className="divide-x divide-gray-200">
-                                            <td className="whitespace-nowrap px-4 py-4">
-                                                <div className="flex items-center">
-                                                    <div className="ml-4">
-                                                        <div className="text-sm font-semibold text-gray-900">Decoration Type</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="whitespace-nowrap px-12 py-4">
-                                                <div className="text-sm text-gray-900 text-right">{product.decorationType}</div>
-                                            </td>
-                                        </tr>
-                                        <tr className="divide-x divide-gray-200">
-                                            <td className="whitespace-nowrap px-4 py-4">
-                                                <div className="flex items-center">
-                                                    <div className="ml-4">
-                                                        <div className="text-sm font-semibold text-gray-900">Other Events</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="whitespace-nowrap px-12 py-4">
-                                                <div className="text-sm text-gray-900 text-right">{product.otherEvents}</div>
-                                            </td>
-                                        </tr>
-                                        <tr className="divide-x divide-gray-200">
-                                            <td className="whitespace-nowrap px-4 py-4">
-                                                <div className="flex items-center">
-                                                    <div className="ml-4">
-                                                        <div className="text-sm font-semibold text-gray-900">Total Guests</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="whitespace-nowrap px-12 py-4">
-                                                <div className="text-sm text-gray-900 text-right">{details.totalGuest}</div>
-                                            </td>
-                                        </tr>
-
-                                        {isBook &&
-                                            <tr>
-                                                <th
-                                                    colSpan="2"
-                                                    scope="col"
-                                                    className="px-4 py-3.5 text-center font-normal text-black text-2xl "
-                                                >
-                                                    <button onClick={checkOutPackage}> Proceed </button>
-                                                </th>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-            }
+            </div>
+
 
             <div className="mt-6 flex flex-col w-[70%] m-auto font-serif bg-white rounded">
                 <h3 className='text-center mt-3 text-2xl font-serif'> Other Packages</h3>
