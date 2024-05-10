@@ -33,8 +33,7 @@ function Book() {
 
     const [startDate, setStartDate] = useState(new Date());
     const [isBook, setIsBook] = useState(false);
-    const [address, setAddress] = useState();
-    const eventLocations = ['Nanded', 'Pune', 'Sambhajinagar', 'Delhi', 'Jaipur', 'utii', 'Bengaluru']
+    const [proceed, setProceed] = useState(false);
     const [eventType, setEventType] = useState("")
     const [products, setProducts] = useState([])
 
@@ -50,12 +49,6 @@ function Book() {
         decorationType: "",
         otherEvents: "",
         totalGuests: ""
-    })
-
-    const [FormData, setFormData] = useState({
-        orderPrice: product.productPrice,
-        address: address,
-        functionDate: startDate
     })
 
 
@@ -130,6 +123,10 @@ function Book() {
         requestData.append("orderPrice", product.productPrice)
         requestData.append("address", address)
         requestData.append("functionDate", startDate)
+    }
+
+    const handleProceed = async () => {
+        setProceed(!proceed);
     }
 
     return (
@@ -282,7 +279,7 @@ function Book() {
                                                 scope="col"
                                                 className="px-4 py-3.5 text-center font-normal text-black text-2xl "
                                             >
-                                                <button onClick={checkOutPackage} className='w-[15%] bg-blue-500'> Proceed to Book</button>
+                                                <button onClick={handleProceed} className='w-[15%] bg-blue-500'> Proceed to Book </button>
                                             </th>
                                         </tr>
                                     }
@@ -305,66 +302,16 @@ function Book() {
                 </div>
             </div>
 
-            <div className="fixed inset-0 z-10 flex items-center justify-center">
-                <div className="absolute inset-0 bg-gray-800 opacity-50"></div>
-                <div className="bg-white rounded-lg p-8 z-20">
-                    <div className="flex justify-end">
-                        <button
-                            // onClick={closeCheckout}
-                            className="text-gray-500 hover:text-gray-700 focus:outline-none"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M6 18L18 6M6 6l12 12"
-                                />
-                            </svg>
-                        </button>
+            {proceed &&
+                <div className="fixed inset-0 z-10 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-gray-800 opacity-50"></div>
+                    <div className="bg-white rounded-lg p-8 z-20">
+                        
+                        <h2 className="text-2xl font-bold mb-4">Checkout</h2>
+                        
                     </div>
-                    <h2 className="text-2xl font-bold mb-4">Checkout</h2>
-                    {/* Your checkout form goes here */}
-                    <form>
-                        <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-                                Name
-                            </label>
-                            <input
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="name"
-                                type="text"
-                                placeholder="Name"
-                            />
-                        </div>
-                        <div className="mb-6">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-                                Email
-                            </label>
-                            <input
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="email"
-                                type="email"
-                                placeholder="Email"
-                            />
-                        </div>
-                        <div className="flex justify-end">
-                            <button
-                                type="submit"
-                                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            >
-                                Submit
-                            </button>
-                        </div>
-                    </form>
                 </div>
-            </div>
+            }
         </>
     )
 }
