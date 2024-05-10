@@ -181,7 +181,7 @@ function Book() {
                         </div>
                         <div className='font-sans w-[100%] flex gap-4'>
                             <label htmlFor="address" className="block text-gray-700 font-bold mb-2">Event Place:</label>
-                            <h3 id='address' className='font-bold font-mono text-black-600 border-gray-300 border-[1px] p-2 rounded-md'>{product.banquetHall}, <br/> {product.city},<br/> {product.state}</h3>
+                            <h3 id='address' className='font-bold font-mono text-black-600 border-gray-300 border-[1px] p-2 rounded-md'>{product.banquetHall}, <br /> {product.city},<br /> {product.state}</h3>
                         </div>
                         <div className='flex justify-start items-end text-[0.8em] text-red-500 font-mono font-bold cursor-pointer' onClick={scrollToDetails}> view Details </div>
                     </div>
@@ -302,6 +302,67 @@ function Book() {
                             <Product key={product._id} id={product._id} img={product.productImage} name={product.productName} desc={product.productDescription} rate={product.productPrice} sold={product.productSold} />
                         )
                     })}
+                </div>
+            </div>
+
+            <div className="fixed inset-0 z-10 flex items-center justify-center">
+                <div className="absolute inset-0 bg-gray-800 opacity-50"></div>
+                <div className="bg-white rounded-lg p-8 z-20">
+                    <div className="flex justify-end">
+                        <button
+                            // onClick={closeCheckout}
+                            className="text-gray-500 hover:text-gray-700 focus:outline-none"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-6 w-6"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                    <h2 className="text-2xl font-bold mb-4">Checkout</h2>
+                    {/* Your checkout form goes here */}
+                    <form>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+                                Name
+                            </label>
+                            <input
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="name"
+                                type="text"
+                                placeholder="Name"
+                            />
+                        </div>
+                        <div className="mb-6">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+                                Email
+                            </label>
+                            <input
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="email"
+                                type="email"
+                                placeholder="Email"
+                            />
+                        </div>
+                        <div className="flex justify-end">
+                            <button
+                                type="submit"
+                                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            >
+                                Submit
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </>

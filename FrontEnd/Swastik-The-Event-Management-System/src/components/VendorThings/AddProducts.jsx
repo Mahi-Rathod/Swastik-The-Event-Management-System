@@ -87,7 +87,7 @@ function AddProducts() {
     requestData.append('foodType', formData.foodType);
     requestData.append('decorationType', formData.decorationType);
 
-    requestData.append('country', formData.banquetHall);
+    requestData.append('country', formData.country);
     requestData.append('state', formData.state);
     requestData.append('city', formData.city);
     requestData.append('banquetHall', formData.banquetHall);
