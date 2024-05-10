@@ -6,10 +6,10 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ProductCategory } from "../models/productCategory.model.js"
 
 const addProduct = asyncHandler(async (req, res) => {
-    const { productName, productDescription, productPrice, category, foodType, decorationType, otherEvents, totalGuests  } = req.body;
+    const { productName, productDescription, productPrice, category, foodType, decorationType, otherEvents, totalGuests, country, state, city, banquetHall  } = req.body;
 
     if (
-        [ productName, productDescription, productPrice, foodType, decorationType, otherEvents, totalGuests ].some((field)=> field?.trim()==="")
+        [ productName, productDescription, productPrice, foodType, decorationType, otherEvents, totalGuests, country, state, city, banquetHall ].some((field)=> field?.trim()==="")
     ) {
         throw new ApiError(400, "All Fields are required");
     }
@@ -42,13 +42,17 @@ const addProduct = asyncHandler(async (req, res) => {
 
 
     const product = await Product.create({
-        productName,
         productDescription,
-        productPrice,
-        foodType,
         decorationType,
+        productPrice,
+        banquetHall,
+        productName,
         otherEvents,
         totalGuests,
+        foodType,
+        country,
+        state,
+        city,
         category : categoryObj,
         productImage : productImage.url,
         owner: user,

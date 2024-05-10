@@ -181,14 +181,7 @@ function Book() {
                         </div>
                         <div className='font-sans w-[100%] flex gap-4'>
                             <label htmlFor="address" className="block text-gray-700 font-bold mb-2">Event Place:</label>
-                            <select id="address" name="address" value={address} onChange={handleChangeLocation} className="w-full border rounded px-3 py-2">
-                                {
-                                    eventLocations.map((location) => (
-                                        <option key={location} value={location}>{location}</option>
-                                    ))
-                                }
-
-                            </select>
+                            <h3 id='address' className='font-bold font-mono text-black-600 border-gray-300 border-[1px] p-2 rounded-md'>{product.banquetHall}, <br/> {product.city},<br/> {product.state}</h3>
                         </div>
                         <div className='flex justify-start items-end text-[0.8em] text-red-500 font-mono font-bold cursor-pointer' onClick={scrollToDetails}> view Details </div>
                     </div>

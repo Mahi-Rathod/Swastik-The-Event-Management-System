@@ -32,7 +32,7 @@ function Navbar() {
                         setIsVendor(false);
                     }
                     dispatch(loginSuccess());
-                    navigate('/');
+                    // navigate('/');
                 }
                 else{
                     setIsVendor(false);
@@ -166,6 +166,7 @@ function Navbar() {
                     </div>
                 </div>
             </nav>
+            {/* <div className="track-route">Home</div> */}
         </header>
     )
 }

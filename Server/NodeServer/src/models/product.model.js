@@ -43,6 +43,22 @@ const productSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "ProductCategory"
     },
+    country :{
+        type: String,
+        required:true,
+    },
+    state :{
+        type: String,
+        required : true,
+    },
+    city :{
+        type : String,
+        required : true,
+    },
+    banquetHall :{
+        type : String,
+        required : true,
+    },
     owner: {
         type: Schema.Types.ObjectId,
         ref: "User"
