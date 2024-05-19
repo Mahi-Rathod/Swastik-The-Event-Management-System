@@ -16,12 +16,12 @@ const details = {
 
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8000/api/v1/product',
+    baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1/product`,
     withCredentials: true
 });
 
 const axiosInstanceCategory = axios.create({
-    baseURL: 'http://localhost:8000/api/v1/category',
+    baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1/category`,
     withCredentials: true
 });
 
