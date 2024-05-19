@@ -23,7 +23,6 @@ function Navbar() {
             try {
                 const response = await axiosInstance.get('/getUser');
                 if (response.data.statusCode === 200) {
-                    console.log(response.data.data.user.isVendor)
                     if (response.data.data.user.isVendor === true) {
                         setIsVendor(true);
                     }
