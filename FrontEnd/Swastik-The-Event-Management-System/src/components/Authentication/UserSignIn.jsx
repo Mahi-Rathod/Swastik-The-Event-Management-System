@@ -24,7 +24,7 @@ function UserSignIn() {
   });
 
   useEffect(() => {
-
+    console.log(import.meta.env.VITE_API_BASE_URL);
     async function fetchData() {
       try {
         const response = await axiosInstance.get('/getUser');

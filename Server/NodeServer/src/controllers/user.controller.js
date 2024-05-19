@@ -7,11 +7,13 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 
 const generateAccessAndRefreshToken = async(userId) =>{
     try{
+        console.log("step1");
         const user = await User.findById(userId)
-        
+        console.log("step2");
         const accessToken = user.generateAccessToken()
+        console.log("step3");
         const refreshToken = user.generateRefreshToken()
-
+        console.log("step4");
         user.refreshToken = refreshToken
         await user.save({validateBeforeSave: false})
 
