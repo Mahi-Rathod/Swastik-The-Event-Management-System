@@ -7,13 +7,9 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 
 const generateAccessAndRefreshToken = async(userId) =>{
     try{
-        console.log("step1");
         const user = await User.findById(userId)
-        console.log("step2");
         const accessToken = user.generateAccessToken()
-        console.log("step3");
         const refreshToken = user.generateRefreshToken()
-        console.log("step4");
         user.refreshToken = refreshToken
         await user.save({validateBeforeSave: false})
 
@@ -93,7 +89,9 @@ const loginUser = asyncHandler(async(req, res)=>{
 
     const options = {
         httpOnly: true,
-        secure  : true 
+        secure  : true,
+        sameSite: 'Strict',
+        maxAge: 3600000,
     }
 
     return res
