@@ -13,13 +13,12 @@ function Navbar() {
     const navigate = useNavigate()
     const axiosInstance = axios.create({
         // Your backend URL
-        baseURL: 'http://localhost:8000/api/v1/users',
+        baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1/users`,
         // Set credentials to include cookies with each request
         withCredentials: true
     });
 
     useEffect(() => {
-
         async function fetchData() {
             try {
                 const response = await axiosInstance.get('/getUser');

@@ -19,7 +19,7 @@ function UserSignIn() {
 
 //Checking if UserHas Logged in Already
   const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8000/api/v1/users',
+    baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1/users`,
     withCredentials: true
   });
 

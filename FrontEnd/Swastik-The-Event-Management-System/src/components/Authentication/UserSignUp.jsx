@@ -62,8 +62,8 @@ function UserSignUp() {
         }
       }
 
-      const response = await axios.post('http://localhost:8000/api/v1/users/register', registerData);
-      console.log(response.data); // Assuming API returns a success message or user data upon successful registration
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/users/register`, registerData);
+      // Assuming API returns a success message or user data upon successful registration
       // Reset form data after successful registration
       if(response.data.statusCode === 200){
         alert("Account Created Successfully");
