@@ -87,9 +87,10 @@ const loginUser = asyncHandler(async(req, res)=>{
     const {accessToken, refreshToken} = await generateAccessAndRefreshToken(user?._id)
     const loggedInUser = await User.findById(user?._id).select("-password -refreshToken")
 
+    const secure = true;
     const options = {
         httpOnly: true,
-        secure  : true,
+        secure  : secure,
         sameSite: 'Lax',
         domain : secure ? "https://swastikevents.vercel.app" : "localhost",
         maxAge: 3600000,
