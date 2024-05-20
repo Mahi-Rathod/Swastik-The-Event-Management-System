@@ -89,8 +89,9 @@ const loginUser = asyncHandler(async(req, res)=>{
 
     const options = {
         httpOnly: true,
-        secure  : false,
-        sameSite: 'Strict',
+        secure  : true,
+        sameSite: 'Lax',
+        domain : secure ? "https://swastikevents.vercel.app" : "localhost",
         maxAge: 3600000,
     }
 
