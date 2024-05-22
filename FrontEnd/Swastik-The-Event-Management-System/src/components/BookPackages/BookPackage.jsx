@@ -6,14 +6,6 @@ import Product from "../Products/product.jsx";
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios'
 
-const details = {
-    eventType: "Weddings",
-    foodType: "Maharashtrian Food, South Indian Food, Chinese Food",
-    decorationType: "Floral Decorations, Baloon Decorations, Ethinic Decoration, Open Decoration",
-    subProgram: "Mehandi Ceremony, Sangeet Ceremony, Haldi Ceremony, Vidai Ceremony",
-    totalGuest: "500",
-}
-
 
 const axiosInstance = axios.create({
     baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1/product`,
@@ -51,7 +43,11 @@ function Book() {
         totalGuests: ""
     })
 
-
+    const [bookData, setBookData] = useState({
+        product: product._id,
+        name: "",
+        date: "",
+    })
 
     useEffect(() => {
         const fetchData = async () => {
@@ -61,7 +57,6 @@ function Book() {
                 if (statusCode === '401') {
                     navigate('/login')
                 }
-                console.log(response)
                 setProduct(response.data.data.product)
 
 
@@ -268,7 +263,7 @@ function Book() {
                                             </div>
                                         </td>
                                         <td className="whitespace-nowrap px-12 py-4">
-                                            <div className="text-sm text-gray-900 text-right">{details.totalGuest}</div>
+                                            <div className="text-sm text-gray-900 text-right">{product.totalGuests}</div>
                                         </td>
                                     </tr>
 
@@ -303,12 +298,30 @@ function Book() {
             </div>
 
             {proceed &&
-                <div className="fixed inset-0 z-10 flex items-center justify-center">
-                    <div className="absolute inset-0 bg-gray-800 opacity-50"></div>
-                    <div className="bg-white rounded-lg p-8 z-20">
-                        
-                        <h2 className="text-2xl font-bold mb-4">Checkout</h2>
-                        
+            // className="fixed inset-0 z-10 flex items-center justify-center w-[100vw]"
+                <div className='fixed inset-0 z-10 flex items-center justify-center' >
+                    {/* className="absolute inset-0 bg-gray-800 opacity-50 w-[100vw]" */}
+                    <div className="absolute inset-0 bg-gray-800 opacity-50 w-[100vw]" ></div>
+                    {/* className="bg-white rounded-lg p-8 z-20" */}
+                    <div className="bg-white rounded-lg p-8 z-20 w-[70%]">
+                        <h1>CheckOut</h1>
+                    {/* className="w-full" */}
+                        <div>
+                        {/* className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" */}
+                            <label
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                htmlFor="name"
+                            >
+                                Name
+                            </label>
+                            {/* className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50" */}
+                            <input
+                                className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                type="text"
+                                placeholder="Enter your name"
+                                id="name"
+                            ></input>
+                        </div>
                     </div>
                 </div>
             }
@@ -317,3 +330,5 @@ function Book() {
 }
 
 export default Book;
+
+// https://pages.razorpay.com/pl_ODWanY8l0VuryS/view
