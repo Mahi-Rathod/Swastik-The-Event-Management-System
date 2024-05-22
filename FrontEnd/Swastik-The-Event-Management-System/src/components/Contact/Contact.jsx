@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 // import Navbar from "../../components/Navbar";
@@ -24,7 +25,7 @@ const ContactUs = () => {
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/send-email`,
+        "http://localhost:8000/send-email",
         formData
       );
 
@@ -45,8 +46,8 @@ const ContactUs = () => {
   return (
     <div>
       {/* <Navbar /> */}
-      <div className="flex justify-center items-center min-h-screen bg-gray-100 ">
-        <div className="max-w-4xl w-full mx-8 ">
+      <div className="flex justify-center items-center min-h-screen bg-gray-100">
+        <div className="max-w-4xl w-full mx-8">
           <h1 className="text-3xl font-extrabold text-gray-900 mb-8 text-center">
             Contact Us
           </h1>
@@ -117,41 +118,39 @@ const ContactUs = () => {
                 </button>
               </div>
             </form>
-            <div className="bg-gradient-to-r  from-orange-400 to-orange-500 text-white rounded-md w-full md:w-1/2 px-8 py-6">
+            <div className="bg-gradient-to-r from-orange-400 to-orange-500 text-white rounded-md w-full md:w-1/2 px-8 py-6">
               <h2 className="text-xl font-semibold text-white mb-4">
                 Our Location
               </h2>
-              {/* Add your map component here */}
               <div className="h-40 bg-gray-400 rounded-md">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3768.3542851823327!2d77.32167797498012!3d19.17972218204631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd1d6fbe138ad81%3A0x9e88bbe86ec52250!2sMGM&#39;s%20College%20Of%20Engineering!5e0!3m2!1sen!2sin!4v1714317460078!5m2!1sen!2sin"
                   style={{ border: "0" }}
-                  className="h-40 w-[384px] rounded-lg"
-                  allowFullScreen ="true"
+                  className="h-40 w-full rounded-lg"
+                  allowFullScreen
                   loading="lazy"
-                  referrerPolicy ="no-referrer-when-downgrade"
+                  referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
-                <div className="block mt-4">
-                  <FaMapMarkerAlt className=" mr-2 inline-block " />
-                  <span className="mt-5 ">
-                    s college of engineering nanded
+                <div className="mt-4">
+                  <FaMapMarkerAlt className="mr-2 inline-block" />
+                  <span className="mt-1">
+                    Mgm's college of engineering nanded
                   </span>
                 </div>
-                <div className="block mt-4">
+                <div className="mt-4">
                   <FaPhone className="inline-block mr-2" />
-                  <span className="mt-2 ">contact us: 9309162865 </span>
+                  <span className="mt-1">contact us: 9309162865</span>
                 </div>
-
-                <div className="block mt-4">
+                <div className="mt-4">
                   <FaEnvelope className="inline-block mr-2" />
-                  <span className="mt-2">email: swastikindustriesltd7@gmail.com</span>
+                  <span className="mt-1">email: swastikindustriesltd7@gmail.com</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      {/* <Footer></Footer> */}
+      {/* <Footer /> */}
     </div>
   );
 };
