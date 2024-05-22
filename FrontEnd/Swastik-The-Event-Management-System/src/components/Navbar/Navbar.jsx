@@ -11,6 +11,7 @@ function Navbar() {
     const [isVendor, setIsVendor] = useState(false);
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    
     const axiosInstance = axios.create({
         // Your backend URL
         baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1/users`,
@@ -41,7 +42,7 @@ function Navbar() {
             }
 
         }
-        fetchData()
+        fetchData();
     }, [navigate, checkAuth])
 
 
