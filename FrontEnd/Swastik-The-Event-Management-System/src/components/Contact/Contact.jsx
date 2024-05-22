@@ -1,131 +1,159 @@
-// function Contact(){
-//     return(
-//         <div>
-//             <h1>Contact Us</h1>
-//         </div>
-//     )
-// }
-// export default Contact;
+import React, { useState } from "react";
+import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+// import Navbar from "../../components/Navbar";
+import axios from "axios";
+// import Footer from "../../components/Footer";
 
-'use client'
+const ContactUs = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
 
-import React from 'react'
-// import { Menu, X, MapPin } from 'lucide-react'
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
-export default function Contact() {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    return (
-        <div>
-            <div className="mx-auto max-w-7xl px-4">
-                <div className="flex flex-col space-y-8 pb-1 pt-1 md:pt-1">
-                    <div className="mx-auto max-w-max rounded-full border bg-gray-50  px-3 ">
-                        <p className="text-center text-xs font-semibold leading-normal md:text-sm" >
-                            Share your thoughts
-                        </p>
-                    </div>  
-                    <p className="text-center text-3xl font-bold text-gray-900 md:text-5xl md:leading-10">
-                        Love to hear from you
-                    </p>
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/send-email`,
+        formData
+      );
+
+      // Check if the response status is OK (2xx)
+      setFormData({ name: "", email: "", message: "" });
+      if (response.status === 200) {
+        console.log("Email sent successfully");
+        // Optionally, you can handle success response here
+      } else {
+        throw new Error("Failed to send email");
+      }
+    } catch (error) {
+      console.error("Error sending email:", error.message);
+      // Optionally, you can display an error message to the user
+    }
+  };
+
+  return (
+    <div>
+      {/* <Navbar /> */}
+      <div className="flex justify-center items-center min-h-screen bg-gray-100 ">
+        <div className="max-w-4xl w-full mx-8 ">
+          <h1 className="text-3xl font-extrabold text-gray-900 mb-8 text-center">
+            Contact Us
+          </h1>
+          <div className="flex flex-col md:flex-row">
+            <form
+              onSubmit={handleSubmit}
+              className="bg-white p-8 rounded-md shadow-lg w-full md:w-1/2 mb-8 md:mb-0"
+            >
+              <div className="mb-4">
+                <label
+                  htmlFor="name"
+                  className="block text-gray-700 font-bold mb-2"
+                >
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  placeholder="Your name"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="email"
+                  className="block text-gray-700 font-bold mb-2"
+                >
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  placeholder="Your email"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="message"
+                  className="block text-gray-700 font-bold mb-2"
+                >
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-32"
+                  placeholder="Your message"
+                  required
+                />
+              </div>
+              <div className="flex justify-end">
+                <button
+                  type="submit"
+                  className="w-full bg-orange-400 text-white py-2 px-4 rounded-md hover:bg-orange-600 focus:outline-none focus:bg-orange-700"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+            <div className="bg-gradient-to-r  from-orange-400 to-orange-500 text-white rounded-md w-full md:w-1/2 px-8 py-6">
+              <h2 className="text-xl font-semibold text-white mb-4">
+                Our Location
+              </h2>
+              {/* Add your map component here */}
+              <div className="h-40 bg-gray-400 rounded-md">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3768.3542851823327!2d77.32167797498012!3d19.17972218204631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd1d6fbe138ad81%3A0x9e88bbe86ec52250!2sMGM&#39;s%20College%20Of%20Engineering!5e0!3m2!1sen!2sin!4v1714317460078!5m2!1sen!2sin"
+                  style={{ border: "0" }}
+                  className="h-40 w-[384px] rounded-lg"
+                  allowFullScreen ="true"
+                  loading="lazy"
+                  referrerPolicy ="no-referrer-when-downgrade"
+                ></iframe>
+                <div className="block mt-4">
+                  <FaMapMarkerAlt className=" mr-2 inline-block " />
+                  <span className="mt-5 ">
+                    s college of engineering nanded
+                  </span>
                 </div>
-                <div className="mx-auto max-w-7xl py-12 md:py-24">
-                    <div className="grid items-center justify-items-center gap-x-4 gap-y-10 lg:grid-cols-2">
-                        <div className="flex items-center justify-center">
-                            <div className="px-2 md:px-12">
-                                <p className="text-2xl font-bold text-gray-900 md:text-4xl">Get in touch</p>
-                                <p className="mt-4 text-lg text-gray-600">
-                                    Our friendly team would love to hear from you.
-                                </p>
-                                <form action="" className="mt-8 space-y-4">
-                                    <div className="grid w-full gap-y-4 md:gap-x-4 lg:grid-cols-2">
-                                        <div className="grid w-full  items-center gap-1.5">
-                                            <label
-                                                className="text-sm font-medium leading-none text-gray-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                                htmlFor="first_name"
-                                            >
-                                                First Name
-                                            </label>
-                                            <input
-                                                className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:text-gray-50 dark:focus:ring-gray-400 dark:focus:ring-offset-gray-900"
-                                                type="text"
-                                                id="first_name"
-                                                placeholder="First Name"
-                                            />
-                                        </div>
-                                        <div className="grid w-full  items-center gap-1.5">
-                                            <label
-                                                className="text-sm font-medium leading-none text-gray-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                                htmlFor="last_name"
-                                            >
-                                                Last Name
-                                            </label>
-                                            <input
-                                                className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:text-gray-50 dark:focus:ring-gray-400 dark:focus:ring-offset-gray-900"
-                                                type="text"
-                                                id="last_name"
-                                                placeholder="Last Name"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="grid w-full  items-center gap-1.5">
-                                        <label
-                                            className="text-sm font-medium leading-none text-gray-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                            htmlFor="email"
-                                        >
-                                            Email
-                                        </label>
-                                        <input
-                                            className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:text-gray-50 dark:focus:ring-gray-400 dark:focus:ring-offset-gray-900"
-                                            type="text"
-                                            id="email"
-                                            placeholder="Email"
-                                        />
-                                    </div>
-                                    <div className="grid w-full  items-center gap-1.5">
-                                        <label
-                                            className="text-sm font-medium leading-none text-gray-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                            htmlFor="phone_number"
-                                        >
-                                            Phone number
-                                        </label>
-                                        <input
-                                            className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:text-gray-50 dark:focus:ring-gray-400 dark:focus:ring-offset-gray-900"
-                                            type="tel"
-                                            id="phone_number"
-                                            placeholder="Phone number"
-                                        />
-                                    </div>
-                                    <div className="grid w-full  items-center gap-1.5">
-                                        <label
-                                            className="text-sm font-medium leading-none text-gray-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                            htmlFor="message"
-                                        >
-                                            Message
-                                        </label>
-                                        <textarea
-                                            className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:text-gray-50 dark:focus:ring-gray-400 dark:focus:ring-offset-gray-900"
-                                            id="message"
-                                            placeholder="Leave us a message"
-                                            cols={3}
-                                        />
-                                    </div>
-                                    <button
-                                        type="button"
-                                        className="w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                                    >
-                                        Send Message
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                        <img
-                            alt="Contact us"
-                            className="hidden max-h-full w-full rounded-lg object-cover lg:block"
-                            src="https://images.unsplash.com/photo-1615840287214-7ff58936c4cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&h=800&q=80"
-                        />
-                    </div>
+                <div className="block mt-4">
+                  <FaPhone className="inline-block mr-2" />
+                  <span className="mt-2 ">contact us: 9309162865 </span>
                 </div>
+
+                <div className="block mt-4">
+                  <FaEnvelope className="inline-block mr-2" />
+                  <span className="mt-2">email: swastikindustriesltd7@gmail.com</span>
+                </div>
+              </div>
             </div>
-            <hr className="mt-6" />
+          </div>
         </div>
-    )
-}
+      </div>
+      {/* <Footer></Footer> */}
+    </div>
+  );
+};
+
+export default ContactUs;
