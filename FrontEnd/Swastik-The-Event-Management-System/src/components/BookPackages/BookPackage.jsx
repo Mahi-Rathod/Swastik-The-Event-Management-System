@@ -12,10 +12,16 @@ const axiosInstance = axios.create({
     withCredentials: true
 });
 
+const axiosInstanceUser = axios.create({
+    baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1`,
+    withCredentials: true
+});
+
 const axiosInstanceCategory = axios.create({
     baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1/category`,
     withCredentials: true
 });
+
 
 function Book() {
 
@@ -25,7 +31,6 @@ function Book() {
 
     const [startDate, setStartDate] = useState(new Date());
     const [isBook, setIsBook] = useState(false);
-    const [proceed, setProceed] = useState(false);
     const [eventType, setEventType] = useState("")
     const [products, setProducts] = useState([])
 
@@ -41,13 +46,8 @@ function Book() {
         decorationType: "",
         otherEvents: "",
         totalGuests: ""
-    })
+    });
 
-    const [bookData, setBookData] = useState({
-        product: product._id,
-        name: "",
-        date: "",
-    })
 
     useEffect(() => {
         const fetchData = async () => {
@@ -120,8 +120,71 @@ function Book() {
         requestData.append("functionDate", startDate)
     }
 
+
+    const paymentForm = async (formData) => {
+        try {
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/createOrder`, formData);
+
+            if (response.data.success) {
+                const { key_id, amount, productName, productDescription, name, contact, email } = response.data.data;
+
+
+                const options = {
+                    key: key_id,
+                    amount: amount.toString(),
+                    currency: "INR",
+                    name: productName,
+                    description: productDescription,
+                    image: productImage,
+                    order_id: order_id,
+                    handler: function (response) {
+                        alert("payment Succeeded!");
+                    },
+                    prefill: {
+                        contact: contact,
+                        name: name,
+                        email: email
+                    },
+                    notes: {
+                        description: productDescription,
+                    },
+                    theme: {
+                        color: "#2300a3"
+                    },
+                };
+                const razorpayObject = new window.Razorpay(options);
+                razorpayObject.on('payment.failed', function (response) {
+                    alert("payment failed!");
+                });
+
+                razorpayObject.open();
+            }
+
+            else {
+                alert(response.data.msg);
+            }
+        }
+        catch (error) {
+            console.log("Error Creating Order: ", error);
+            alert("An Error Occurred. Please try again....");
+        }
+    };
+
     const handleProceed = async () => {
-        setProceed(!proceed);
+        const user = await axiosInstanceUser.get(`/users/getUser`);
+        const { fullName, email, mobileNumber } = user.data.data.user;
+        // amount, productName, productDescription, name, contact, email, productImage
+
+        const formData = {
+            "amount" : product.productPrice,
+            "productName" : product.productName,
+            "productDescription" : product.productDescription,
+            "name" : fullName,
+            "email" : email,
+            "contact" : mobileNumber,
+            "productImage" : product.productImage,
+        }
+        paymentForm(formData);
     }
 
     return (
@@ -297,34 +360,6 @@ function Book() {
                 </div>
             </div>
 
-            {proceed &&
-            // className="fixed inset-0 z-10 flex items-center justify-center w-[100vw]"
-                <div className='fixed inset-0 z-10 flex items-center justify-center' >
-                    {/* className="absolute inset-0 bg-gray-800 opacity-50 w-[100vw]" */}
-                    <div className="absolute inset-0 bg-gray-800 opacity-50 w-[100vw]" ></div>
-                    {/* className="bg-white rounded-lg p-8 z-20" */}
-                    <div className="bg-white rounded-lg p-8 z-20 w-[70%]">
-                        <h1>CheckOut</h1>
-                    {/* className="w-full" */}
-                        <div>
-                        {/* className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" */}
-                            <label
-                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                htmlFor="name"
-                            >
-                                Name
-                            </label>
-                            {/* className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50" */}
-                            <input
-                                className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                                type="text"
-                                placeholder="Enter your name"
-                                id="name"
-                            ></input>
-                        </div>
-                    </div>
-                </div>
-            }
         </>
     )
 }
