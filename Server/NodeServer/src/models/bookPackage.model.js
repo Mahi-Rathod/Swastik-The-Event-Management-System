@@ -13,17 +13,13 @@ const bookSchema = new Schema({
         type : Schema.Types.ObjectId,
         ref  : "Product"
     },
-    address: {
-        type: String,
-        required: true,
-    },
     functionDate :{
         type: Date,
         default: new Date()
     },
     status: {
         type: String,
-        enum: ["PENDING", "CANCELLED", "DELIVERED"],
+        enum: ["PENDING", "CANCELLED", "COMPLETED"],
         default: "PENDING"
     },
 },

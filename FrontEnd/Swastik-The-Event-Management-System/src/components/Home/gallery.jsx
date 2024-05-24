@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { GrCaretNext } from "react-icons/gr";
 import { GrCaretPrevious } from "react-icons/gr"
 
 import "./gallery.css"
 function Gallery({ slides }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  
   const prev = () => {
     const isFirstSlide = currentIndex === 0;
     const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1;
@@ -16,6 +17,24 @@ function Gallery({ slides }) {
     const newIndex = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
   }
+  
+   // Function to go to the next slide
+   const nextSlide = () => {
+    const newIndex = (currentIndex === slides.length - 1) ? 0 : currentIndex + 1;
+    setCurrentIndex(newIndex);
+  };
+
+  useEffect(() => {
+    // Set up a timer to advance to the next slide every 5 seconds (5000 milliseconds)
+    const timer = setInterval(() => {
+      nextSlide();
+    }, 3000);
+
+    // Clean up the timer when the component unmounts or when slides change
+    return () => clearInterval(timer);
+  }, [currentIndex, slides]);
+
+  
   return (
     <>
       <div className="main">

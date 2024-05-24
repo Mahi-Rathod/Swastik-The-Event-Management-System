@@ -30,10 +30,10 @@ function Book() {
     const { id } = useParams();
 
     const [startDate, setStartDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(new Date());
     const [isBook, setIsBook] = useState(false);
     const [eventType, setEventType] = useState("")
     const [products, setProducts] = useState([])
-
     const [product, setProduct] = useState({
         _id: "",
         productName: "",
@@ -93,6 +93,7 @@ function Book() {
         minDate.setDate(currentDate.getDate() + 20)
         if (date > minDate) {
             setStartDate(date);
+            setSelectedDate(date);
         }
         else {
             alert("Function Date must be 20 days after today..")
@@ -108,16 +109,16 @@ function Book() {
     }
 
 
-    const handleChangeLocation = (e) => {
-        const { value } = e.target
-        setAddress(value)
-    }
-
-    const checkOutPackage = async () => {
+    const saveBookings = async () => {
         const requestData = new FormData();
-        requestData.append("orderPrice", product.productPrice)
-        requestData.append("address", address)
-        requestData.append("functionDate", startDate)
+        requestData.append("orderPrice", product.productPrice);
+        requestData.append("address", address);
+        requestData.append("functionDate", startDate);
+        try {
+            const bookRes = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/bookPackage/:${product._id}`)
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 
@@ -126,7 +127,7 @@ function Book() {
             const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/createOrder`, formData);
 
             if (response.data.success) {
-                const { key_id, amount, productName, productDescription, name, contact, email } = response.data.data;
+                const { order_id, key_id, amount, productName, productDescription, name, contact, email } = response.data.data;
 
 
                 const options = {
@@ -135,9 +136,11 @@ function Book() {
                     currency: "INR",
                     name: productName,
                     description: productDescription,
-                    image: productImage,
+                    image: "",
                     order_id: order_id,
                     handler: function (response) {
+                        console.log(response);
+                        saveBookings(amount);
                         alert("payment Succeeded!");
                     },
                     prefill: {
@@ -173,7 +176,6 @@ function Book() {
     const handleProceed = async () => {
         const user = await axiosInstanceUser.get(`/users/getUser`);
         const { fullName, email, mobileNumber } = user.data.data.user;
-        // amount, productName, productDescription, name, contact, email, productImage
 
         const formData = {
             "amount" : product.productPrice,
@@ -184,7 +186,12 @@ function Book() {
             "contact" : mobileNumber,
             "productImage" : product.productImage,
         }
-        paymentForm(formData);
+        if(selectedDate === startDate){
+            paymentForm(formData);
+        }
+        else{
+            alert("Please Select Date")
+        }
     }
 
     return (
@@ -220,17 +227,19 @@ function Book() {
                         <p className='text-sm font-sans text-black-600 text-justify'>
                             {product.productDescription}
                         </p>
-                        <h3 className='text-3xl font-bold font-mono text-black-600'> Price : ₹ {product.productPrice} /- </h3>
+                        <h3 className='text-2xl font-bold font-mono text-black-600'> Price : ₹ {product.productPrice} /- </h3>
                         <div className='font-sans w-[100%] flex gap-4'>
                             <p className='text-md font-semibold'>Function Date : </p>
                             <DatePicker
                                 selected={startDate}
                                 onChange={handleChangeDate}
+                                // dateFormat="DD/MM/YYYY"
                                 className='rounded font-mono w-[50%] px-2 bg-blue-500 text-white'
+                                placeholderText='DD/MM/YYYY'
                             />
                         </div>
                         <div className='flex justify-start gap-4 w-[100%]'>
-                            <button className='w-[30%] bg-blue-500'> Send Query</button>
+                            <button className='w-[30%] bg-white hover:bg-white'> </button>
                             <button className='w-[30%] bg-blue-200 font-thin border-solid border-blue-600 border-[1px] text-blue-600' onClick={scrollToDetails}> BOOK NOW</button>
 
                         </div>

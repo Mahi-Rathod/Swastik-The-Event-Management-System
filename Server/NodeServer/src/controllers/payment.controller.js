@@ -13,9 +13,8 @@ const razorpayInstance = new Razorpay({
 const createOrder = asyncHandler(async(req, res)=>{
     try {
         const {productName, productDescription, amount, name, contact, email} = req.body;
-        console.log(productName, productDescription, amount, name, contact, email)
         const options ={
-            amount : amount,
+            amount : amount.toNumber(),
             currency: 'INR',
             receipt : 'razorUser@gmail.com'
         }
@@ -29,7 +28,7 @@ const createOrder = asyncHandler(async(req, res)=>{
                             200,
                             {
                                 order_id:order.id,
-                                amount : amount,
+                                amount : amount.toNumber(),
                                 key_id : RAZORPAY_ID_KEY,
                                 product_name:productName,
                                 description:productDescription,
@@ -41,6 +40,7 @@ const createOrder = asyncHandler(async(req, res)=>{
                         ));
                 }
                 else{
+                    console.log(err)
                     res.status(400).send({success:false,msg:'Something went wrong!'});
                 }
             }
