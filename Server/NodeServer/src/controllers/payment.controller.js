@@ -40,7 +40,7 @@ const createOrder = asyncHandler(async(req, res)=>{
                         ));
                 }
                 else{
-                    // console.log(err)
+                    console.log(err)
                     res.status(400).send({success:false,msg:'Something went wrong!'});
                 }
             }

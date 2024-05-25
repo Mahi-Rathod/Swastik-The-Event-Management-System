@@ -176,7 +176,7 @@ function Book() {
     const handleProceed = async () => {
         const user = await axiosInstanceUser.get(`/users/getUser`);
         const { fullName, email, mobileNumber } = user.data.data.user;
-
+        
         const formData = {
             "amount" : product.productPrice,
             "productName" : product.productName,
