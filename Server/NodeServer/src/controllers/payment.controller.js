@@ -14,7 +14,7 @@ const createOrder = asyncHandler(async(req, res)=>{
     try {
         const {productName, productDescription, amount, name, contact, email} = req.body;
         const options ={
-            amount : amount.toNumber(),
+            amount : parseInt(amount),
             currency: 'INR',
             receipt : 'razorUser@gmail.com'
         }
@@ -28,7 +28,7 @@ const createOrder = asyncHandler(async(req, res)=>{
                             200,
                             {
                                 order_id:order.id,
-                                amount : amount.toNumber(),
+                                amount : parseInt(amount),
                                 key_id : RAZORPAY_ID_KEY,
                                 product_name:productName,
                                 description:productDescription,
@@ -40,7 +40,7 @@ const createOrder = asyncHandler(async(req, res)=>{
                         ));
                 }
                 else{
-                    console.log(err)
+                    // console.log(err)
                     res.status(400).send({success:false,msg:'Something went wrong!'});
                 }
             }

@@ -11,7 +11,7 @@ function Navbar() {
     const [isVendor, setIsVendor] = useState(false);
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    
+
     const axiosInstance = axios.create({
         // Your backend URL
         baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1/users`,
@@ -27,13 +27,13 @@ function Navbar() {
                     if (response.data.data.user.isVendor === true) {
                         setIsVendor(true);
                     }
-                    else{
+                    else {
                         setIsVendor(false);
                     }
                     dispatch(loginSuccess());
                     // navigate('/');
                 }
-                else{
+                else {
                     setIsVendor(false);
                 }
             }
@@ -77,6 +77,17 @@ function Navbar() {
                         </div>
                     }
 
+                    {checkAuth && !isVendor &&
+                        <div className="flex items-center lg:order-2">
+                            <Link
+                                className="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none"
+                                to='/my-bookings'
+                            >
+                                My Bookings
+                            </Link>
+                        </div>
+                    }
+
                     {!checkAuth &&
                         <div className="flex items-center lg:order-2">
                             <Link
@@ -107,7 +118,7 @@ function Navbar() {
                         </div>
                     }
 
-                    
+
 
 
                     <div

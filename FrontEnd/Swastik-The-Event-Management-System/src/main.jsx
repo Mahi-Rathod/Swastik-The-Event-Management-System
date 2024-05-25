@@ -14,6 +14,7 @@ import UserSignIn from './components/Authentication/UserSignIn.jsx'
 import UserSignUp from './components/Authentication/UserSignUp.jsx'
 import VendorSignIn from './components/Authentication/VendorSignIn.jsx'
 import AddProducts from './components/VendorThings/AddProducts.jsx'
+import MyBooking from './components/BookPackages/myBookings.jsx'
 
 const router = createBrowserRouter([{
   path:'',
@@ -37,7 +38,8 @@ const router = createBrowserRouter([{
     {path:'login',element:<UserSignIn />},
     {path:'signup',element:<UserSignUp />},
     {path:'vendor-sign-in',element:<VendorSignIn/>},
-    {path:'add-products', element:<AddProducts/>}
+    {path:'add-products', element:<AddProducts/>},
+    {path:'my-bookings', element:<MyBooking />}
   ],
 }])
 

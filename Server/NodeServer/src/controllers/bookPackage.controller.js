@@ -5,7 +5,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { BookPackage } from "../models/bookPackage.model.js";
 
 const bookPackage = asyncHandler(async(req, res)=>{
-    const { orderPrice, address, functionDate, mobileNumber } = req.body
+    const { orderPrice, address, functionDate } = req.body
     const { id } = req.params
     if (
         [ orderPrice, address ].some((field)=> field?.trim()==="")
@@ -15,7 +15,7 @@ const bookPackage = asyncHandler(async(req, res)=>{
 
     const customer = req.user
 
-    const bookedItem = await findById(id);
+    const bookedItem = await Product.findById(id);
     
     if(!bookedItem){
         throw new ApiError(
