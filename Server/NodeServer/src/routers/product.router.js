@@ -20,5 +20,5 @@ router.route("/get-product-by-id/:id").get(
     getProductById
 )
 router.route("/get-products").get(getProducts);
-router.route("/get-products-by-category/:id").get(verifyJWT,getProductByCategory);
+router.route("/get-products-by-category/:id").get(getProductByCategory);
 export default router;

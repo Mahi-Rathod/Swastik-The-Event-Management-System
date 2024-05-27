@@ -35,14 +35,6 @@ function Services() {
         setQueryPopUp(!queryPopUp);
     }
 
-    const saveQuery = (queryObj) => {
-        let tempList = queries;
-        tempList.push(queryObj);
-        localStorage.setItem("queries", JSON.stringify(tempList));
-        setQueries(tempList);
-    }
-
-
     return (
         <>
             <div className="flex flex-col mx-auto w-full md:flex-row">
@@ -55,7 +47,7 @@ function Services() {
                     <button className='bg-blue-600 text-white w-[8rem] font-bold p-1 rounded sticky top-[10%] animate-bounce' onClick={handleQueryPop}>Help</button>
                 </div>
             </div>
-            {queryPopUp && <SendEnquiry handleQueryPop={handleQueryPop} saveQuery={saveQuery} />}
+            {queryPopUp && <SendEnquiry handleQueryPop={handleQueryPop} />}
         </>
     )
 }

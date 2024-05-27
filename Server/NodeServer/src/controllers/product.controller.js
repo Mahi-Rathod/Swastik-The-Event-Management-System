@@ -74,7 +74,6 @@ const getProducts = asyncHandler(async (req, res) => {
             .status(200)
             .json(new ApiResponse(200, { products }));
     } catch (error) {
-        console.log("Something went wrong while retrieving products:", error);
         throw new ApiError(500, "Something went wrong while retrieving products.");
     }
 });
@@ -100,15 +99,15 @@ const getProductById = asyncHandler(async(req, res)=>{
 const getProductByCategory = asyncHandler(async(req,res) => {
     try {
         const { id } = req.params;
-        console.log(id)
-        const products = await Product.find({category:id});
+        const categoryObj = await ProductCategory.findById(id);
+        const products = await Product.find({category:categoryObj});
 
         return res
             .status(200)
             .json(new ApiResponse(200, { products }));
 
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         throw new ApiError(
             501,
             "Something Went Wrong....."

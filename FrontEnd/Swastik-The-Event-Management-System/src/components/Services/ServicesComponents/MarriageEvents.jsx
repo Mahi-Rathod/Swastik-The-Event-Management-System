@@ -11,7 +11,6 @@ function MarriageEvents() {
   const [inRange, setInRange] = useState([]);
   const [above1000000, setAbove1000000] = useState([]);
   const { id } = useParams();
-
   const indianStates = [
     "Andaman and Nicobar Islands",
     "Andhra Pradesh",
@@ -65,7 +64,7 @@ function MarriageEvents() {
 
       try {
 
-        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/product/get-products-by-category/:${id}`);
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/product/get-products-by-category/${id}`);
         const products = res.data.data.products
         console.log(res.data.data.products)
         setProducts(res.data.data.products);

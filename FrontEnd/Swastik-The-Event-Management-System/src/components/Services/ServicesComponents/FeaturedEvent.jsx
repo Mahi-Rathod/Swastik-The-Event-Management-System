@@ -2,11 +2,12 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { BiSolidSkipPreviousCircle, BiSolidSkipNextCircle } from "react-icons/bi";
 import { Link } from 'react-router-dom';
-
+import axios from 'axios';
 
 
 function FeaturedEvent({ data, eventType }) {
     let [index, setIndex] = useState(0);
+    const [event, setEvent] = useState("")
     const prevBtn = () => {
         let len = data.length;
         if (index === 0) {
@@ -19,9 +20,19 @@ function FeaturedEvent({ data, eventType }) {
     }
     useEffect(() => {
         const intervalId = setInterval(nxtBtn, 5000);
-
+        const fetchData = async() =>{
+            try {
+                const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/category/get-categorybyid/${eventType}`);
+                
+                setEvent(res.data.data.category.categoryName)
+            } catch (error) {
+                console.log(error)
+            }
+        } 
+        fetchData();
         return () => clearInterval(intervalId);
     })
+
 
     const nxtBtn = () => {
         let len = data.length;
@@ -36,7 +47,7 @@ function FeaturedEvent({ data, eventType }) {
     return (
 
         <>
-            <h1 className="text-3xl px-[2rem] mt-[1rem]  underline font-bold">{eventType}</h1>
+            <h1 className="text-3xl px-[2rem] mt-[1rem]  underline font-bold">{event}</h1>
             <div className='w-[90%] p-[1rem] flex justify-evenly items-center m-auto mt-[1rem] overflow-hidden border-l border-r border-black mb-[1rem]'>
                 <button className='flex items-center justify-center w-[5rem] bg-[rgba(209, 209, 209, 0)]' onClick={prevBtn}><p><BiSolidSkipPreviousCircle /></p></button>
                 <div className='prd-container'>
@@ -47,7 +58,7 @@ function FeaturedEvent({ data, eventType }) {
                                 <p className='text-2xl no-underline hover:underline font-bold'>{data[index].name}</p>
                                 <p className='text-justify '>{data[index].review}</p>
                                 <button className='bg-indigo-500 text-white w-[7rem] text-sm px-2 py-1 rounded'>
-                                    <Link to={`/services/event/:${eventType}`}>See More</Link>
+                                    <Link to={`/services/event/${eventType}`}>See More</Link>
                                 </button>
                             </div>
                         </div>
