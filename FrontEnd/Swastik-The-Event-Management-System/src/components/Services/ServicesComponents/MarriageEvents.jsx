@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react'
 import Product from "./../../Products/product.jsx"
 import axios from 'axios';
 
-function MarriageEvents() {
+function MarriageEvents({eventType}) {
   const [status, setStatus] = useState("All");
   const [selectedState, setSelectedState] = useState("");
   const [products, setProducts] = useState([]);
+  const [upTo100000, setUpTo100000] = useState([]);
+  const [inRange, setInRange] = useState([]);
+  const [above1000000, setAbove1000000] = useState([]);
+
   const indianStates = [
     "Andaman and Nicobar Islands",
     "Andhra Pradesh",
@@ -69,16 +73,28 @@ function MarriageEvents() {
 
     }
 
+    const filtered = () => {
+      const upTo100000 = products.filter(product => parseInt(product.productPrice, 10) <= 100000);
+      const inRange = products.filter(product => {
+        const price = parseInt(product.productPrice, 10);
+        return price > 100000 && price <= 1000000;
+      });
+      const above1000000 = products.filter(product => parseInt(product.productPrice, 10) > 1000000);
+
+      setUpTo100000(upTo100000);
+      setInRange(inRange);
+      setAbove1000000(above1000000);
+    }
+
     fetchData();
+    filtered();
   }, [status, selectedState])
 
   const filteredProducts = status === "All"
     ? products
-    : products.filter(product => product.status === status);
+    : products.filter(product => product.price === status);
 
 
-
-  console.log(filteredProducts)
   return (
     <div className="w-[90%] m-auto flex flex-row justify-evenly p-2 gap-3">
       <aside className="w-[20%] h-[100vh] bg-white shadow-md flex flex-col p-3">
@@ -121,20 +137,28 @@ function MarriageEvents() {
           </select>
         </div>
       </aside>
-      <aside className="w-[80%] m-auto text-center p-2">
-        <section className='grid grid-rows-3 grid-flow-col gap-4'>
+      <aside className="w-[80%] mr-auto ml-auto text-center p-2">
+        <section className='flex flex-wrap gap-4 w-full items-start justify-evenly bg-white p-4'>
           {
             status === "All" && (
               <>
                 {filteredProducts.length === 0 ? (
                   <div className="w-full bg-white h-[30vh] flex flex-row items-center">
                     <div className="w-full">
-                      <h2 className='text-2xl font-bold'>You don't have any Bookings</h2>
+                      <h2 className='text-2xl font-bold'>You don't have any Products</h2>
                     </div>
                   </div>
                 ) : (
                   filteredProducts.map((product) => (
-                    <Product />
+                    <Product
+                      key={product._id}
+                      id={product._id}
+                      img={product.productImage}
+                      name={product.productName}
+                      desc={product.productDescription}
+                      rate={product.productPrice}
+                      sold={product.productSold}
+                    />
                   ))
                 )}
               </>
@@ -142,17 +166,25 @@ function MarriageEvents() {
           }
 
           {
-            status === "PENDING" && (
+            status === "Upto 100000" && (
               <>
-                {filteredProducts.length === 0 ? (
+                {upTo100000.length === 0 ? (
                   <div className="w-full bg-white h-[30vh] flex flex-row items-center">
                     <div className="w-full">
                       <h2>You don't have any Pending Events</h2>
                     </div>
                   </div>
                 ) : (
-                  filteredProducts.map((product) => (
-                    <Product />
+                  upTo100000.map((product) => (
+                    <Product
+                      key={product._id}
+                      id={product._id}
+                      img={product.productImage}
+                      name={product.productName}
+                      desc={product.productDescription}
+                      rate={product.productPrice}
+                      sold={product.productSold}
+                    />
                   ))
                 )}
               </>
@@ -160,23 +192,55 @@ function MarriageEvents() {
           }
 
           {
-            status === "COMPLETED" && (
+            status === "100000 To 1000000" && (
               <>
-                {filteredProducts.length === 0 ? (
+                {inRange.length === 0 ? (
                   <div className="w-full bg-white h-[30vh] flex flex-row items-center">
                     <div className="w-full">
                       <h2 className='text-2xl font-bold'>You don't have any Completed Events</h2>
                     </div>
                   </div>
                 ) : (
-                  filteredProducts.map((product) => (
-                    <Product />
+                  inRange.map((product) => (
+                    <Product
+                      key={product._id}
+                      id={product._id}
+                      img={product.productImage}
+                      name={product.productName}
+                      desc={product.productDescription}
+                      rate={product.productPrice}
+                      sold={product.productSold}
+                    />
                   ))
                 )}
               </>
             )
           }
-          <Product />
+          {
+            status === "Above 1000000" && (
+              <>
+                {above1000000.length === 0 ? (
+                  <div className="w-full bg-white h-[30vh] flex flex-row items-center">
+                    <div className="w-full">
+                      <h2 className='text-2xl font-bold'>You don't have any Completed Events</h2>
+                    </div>
+                  </div>
+                ) : (
+                  above1000000.map((product) => (
+                    <Product
+                      key={product._id}
+                      id={product._id}
+                      img={product.productImage}
+                      name={product.productName}
+                      desc={product.productDescription}
+                      rate={product.productPrice}
+                      sold={product.productSold}
+                    />
+                  ))
+                )}
+              </>
+            )
+          }
         </section>
       </aside>
     </div>
