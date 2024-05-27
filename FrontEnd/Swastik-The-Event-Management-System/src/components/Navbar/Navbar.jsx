@@ -70,14 +70,45 @@ function Navbar() {
                         />
                     </NavLink>
 
-                    {isVendor &&
+                    {checkAuth && isVendor &&
                         <div className="flex items-center lg:order-2">
-                            <NavLink
-                                className="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none"
-                                to='/add-products'
-                            >
-                                Add Products
-                            </NavLink>
+                            <div>
+                                <img src={avtar} alt="" className="h-[4rem] rounded-full cursor-pointer" onClick={handleNav} />
+                            </div>
+                            {flag &&
+                                <div className="flex w-[12%] flex-col gap-2 absolute top-[4.5rem] bg-white p-1 right-[3rem] items-center">
+                                    <NavLink
+                                        className={({ isActive }) => `block duration-200 ${isActive ? "text-orange-500" : "text-gray-500"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0  font-bold bg-slate-200 rounded-sm w-[80%] text-center`
+                                        }
+                                        to='/'
+                                    >
+                                        <p className="p-2">Profile</p>
+                                    </NavLink>
+
+                                    <NavLink
+                                        className={({ isActive }) => `block duration-200 ${isActive ? "text-orange-500" : "text-gray-500"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0  font-bold bg-slate-200 rounded-sm  w-[80%] text-center`
+                                        }
+                                        to='/our-products'
+                                    >
+                                        <p className="p-2">Our Products</p>
+                                    </NavLink>
+
+                                    <NavLink
+                                        className={({ isActive }) => `block duration-200 ${isActive ? "text-orange-500" : "text-gray-500"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0  font-bold bg-slate-200 rounded-sm  w-[80%] text-center`
+                                        }
+                                        to='/add-products'
+                                    >
+                                        <p className="p-2">Add Products</p>
+                                    </NavLink>
+
+                                    <NavLink
+                                        className="text-gray-800 hover:bg-pink-500 hover:text-white focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm  mr-2 focus:outline-none bg-slate-200"
+                                        onClick={handleLogout}
+                                    >
+                                        <p className="p-2">Log Out</p>
+                                    </NavLink>
+                                </div>
+                            }
                         </div>
                     }
 

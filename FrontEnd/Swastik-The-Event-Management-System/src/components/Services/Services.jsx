@@ -24,17 +24,17 @@ import concert_6 from '../../assets/concert/concert_6.jpg'
 
 import React, { useState } from "react";
 import './Services.css'
-import SendEnquiry from './SendEnquiry/SendEnquiry'
 import FeaturedEvent from './ServicesComponents/FeaturedEvent'
-                                                                                                                        
+import { useNavigate } from 'react-router-dom'
+
 function Services() {
     const [queryPopUp, setQueryPopUp] = useState(false);
     const [queries, setQueries] = useState([]);
+    const navigate = useNavigate();
 
-    const handleQueryPop = () => {
-        setQueryPopUp(!queryPopUp);
+    const handleQueryPop = () =>{
+        navigate('/contact')
     }
-
     return (
         <>
             <div className="flex flex-col mx-auto w-full md:flex-row">
@@ -47,7 +47,7 @@ function Services() {
                     <button className='bg-blue-600 text-white w-[8rem] font-bold p-1 rounded sticky top-[10%] animate-bounce' onClick={handleQueryPop}>Help</button>
                 </div>
             </div>
-            {queryPopUp && <SendEnquiry handleQueryPop={handleQueryPop} />}
+            
         </>
     )
 }

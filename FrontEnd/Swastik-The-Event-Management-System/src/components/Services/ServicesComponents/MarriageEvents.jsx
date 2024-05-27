@@ -5,8 +5,9 @@ import { useParams } from 'react-router-dom';
 
 function MarriageEvents() {
   const [status, setStatus] = useState("All");
-  const [selectedState, setSelectedState] = useState("");
+  const [selectedState, setSelectedState] = useState("Maharashtra");
   const [products, setProducts] = useState([]);
+  const [otherEvents, setOtherEvents] = useState([]);
   const [upTo100000, setUpTo100000] = useState([]);
   const [inRange, setInRange] = useState([]);
   const [above1000000, setAbove1000000] = useState([]);
@@ -59,15 +60,31 @@ function MarriageEvents() {
   }
 
   useEffect(() => {
+    // const difference = (otherEvents, products) => {
+    //   const resultMap = new Map();
+    //   const differenceArray = [];
 
+    //   // Map objects from arr2 based on a common property
+    //   products.forEach(item => resultMap.set(item._id, true));
+
+    //   // Check if objects in arr1 don't exist in the map, if yes, push to differenceArray
+    //   otherEvents.forEach(item => {
+    //     if (!resultMap.has(item._id)) {
+    //       differenceArray.push(item);
+    //     }
+    //   });
+
+    //   return differenceArray;
+    // };
     const fetchData = async () => {
-
       try {
-
         const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/product/get-products-by-category/${id}`);
-        const products = res.data.data.products
-        console.log(res.data.data.products)
+
         setProducts(res.data.data.products);
+
+        const res1 = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/product/get-products`);
+        const events = res1.data.data.products
+        setOtherEvents(events);
       } catch (error) {
         console.log(error)
       }
@@ -85,10 +102,15 @@ function MarriageEvents() {
       setUpTo100000(upTo100000);
       setInRange(inRange);
       setAbove1000000(above1000000);
+
+
     }
 
     fetchData();
     filtered();
+    // const resultIntersection = difference(otherEvents, products);
+    // console.log(resultIntersection)
+    // setOtherEvents(resultIntersection);
   }, [status, selectedState])
 
   const filteredProducts = status === "All"
@@ -139,28 +161,33 @@ function MarriageEvents() {
         </div>
       </aside>
       <aside className="w-[80%] mr-auto ml-auto text-center p-2">
+        <div className="w-full h-10 mb-1 bg-white font-extrabold p-1 text-start text-2xl font-mono"> <h1> Events </h1> </div>
+        <hr />
         <section className='flex flex-wrap gap-4 w-full items-start justify-evenly bg-white p-4'>
+
           {
             status === "All" && (
               <>
                 {filteredProducts.length === 0 ? (
                   <div className="w-full bg-white h-[30vh] flex flex-row items-center">
                     <div className="w-full">
-                      <h2 className='text-2xl font-bold'>You don't have any Products</h2>
+                      <h2 className='text-2xl font-bold'>don't have any Events</h2>
                     </div>
                   </div>
                 ) : (
-                  filteredProducts.map((product) => (
-                    <Product
-                      key={product._id}
-                      id={product._id}
-                      img={product.productImage}
-                      name={product.productName}
-                      desc={product.productDescription}
-                      rate={product.productPrice}
-                      sold={product.productSold}
-                    />
-                  ))
+                  filteredProducts
+                    .filter(product => product.state === selectedState)
+                    .map((product) => (
+                      <Product
+                        key={product._id}
+                        id={product._id}
+                        img={product.productImage}
+                        name={product.productName}
+                        desc={product.productDescription}
+                        rate={product.productPrice}
+                        sold={product.productSold}
+                      />
+                    ))
                 )}
               </>
             )
@@ -172,21 +199,23 @@ function MarriageEvents() {
                 {upTo100000.length === 0 ? (
                   <div className="w-full bg-white h-[30vh] flex flex-row items-center">
                     <div className="w-full">
-                      <h2>You don't have any Pending Events</h2>
+                      <h2 className='font-bold text-2xl'>Sorry We Dont Have any Events in This Range</h2>
                     </div>
                   </div>
                 ) : (
-                  upTo100000.map((product) => (
-                    <Product
-                      key={product._id}
-                      id={product._id}
-                      img={product.productImage}
-                      name={product.productName}
-                      desc={product.productDescription}
-                      rate={product.productPrice}
-                      sold={product.productSold}
-                    />
-                  ))
+                  upTo100000
+                    .filter(product => product.state === selectedState)
+                    .map((product) => (
+                      <Product
+                        key={product._id}
+                        id={product._id}
+                        img={product.productImage}
+                        name={product.productName}
+                        desc={product.productDescription}
+                        rate={product.productPrice}
+                        sold={product.productSold}
+                      />
+                    ))
                 )}
               </>
             )
@@ -198,21 +227,23 @@ function MarriageEvents() {
                 {inRange.length === 0 ? (
                   <div className="w-full bg-white h-[30vh] flex flex-row items-center">
                     <div className="w-full">
-                      <h2 className='text-2xl font-bold'>You don't have any Completed Events</h2>
+                      <h2 className='font-bold text-2xl'>Sorry We Dont Have any Events in This Range</h2>
                     </div>
                   </div>
                 ) : (
-                  inRange.map((product) => (
-                    <Product
-                      key={product._id}
-                      id={product._id}
-                      img={product.productImage}
-                      name={product.productName}
-                      desc={product.productDescription}
-                      rate={product.productPrice}
-                      sold={product.productSold}
-                    />
-                  ))
+                  inRange
+                    .filter(product => product.state === selectedState)
+                    .map((product) => (
+                      <Product
+                        key={product._id}
+                        id={product._id}
+                        img={product.productImage}
+                        name={product.productName}
+                        desc={product.productDescription}
+                        rate={product.productPrice}
+                        sold={product.productSold}
+                      />
+                    ))
                 )}
               </>
             )
@@ -223,25 +254,44 @@ function MarriageEvents() {
                 {above1000000.length === 0 ? (
                   <div className="w-full bg-white h-[30vh] flex flex-row items-center">
                     <div className="w-full">
-                      <h2 className='text-2xl font-bold'>You don't have any Completed Events</h2>
+                      <h2 className='font-bold text-2xl'>Sorry We Dont Have any Events in This Range</h2>
                     </div>
                   </div>
                 ) : (
-                  above1000000.map((product) => (
-                    <Product
-                      key={product._id}
-                      id={product._id}
-                      img={product.productImage}
-                      name={product.productName}
-                      desc={product.productDescription}
-                      rate={product.productPrice}
-                      sold={product.productSold}
-                    />
-                  ))
+                  above1000000
+                    .filter(product => product.state === selectedState)
+                    .map((product) => (
+                      <Product
+                        key={product._id}
+                        id={product._id}
+                        img={product.productImage}
+                        name={product.productName}
+                        desc={product.productDescription}
+                        rate={product.productPrice}
+                        sold={product.productSold}
+                      />
+                    ))
                 )}
               </>
             )
           }
+        </section>
+
+        <div className="w-full mt-3 h-10 mb-1 bg-white font-extrabold p-1 text-start text-2xl font-mono"> <h1> Other Events </h1> </div>
+        <hr />
+        <section className='flex flex-wrap gap-4 w-full items-start justify-evenly bg-white p-4'>
+          {otherEvents
+            .map((product) => (
+              <Product
+                key={product._id}
+                id={product._id}
+                img={product.productImage}
+                name={product.productName}
+                desc={product.productDescription}
+                rate={product.productPrice}
+                sold={product.productSold}
+              />
+            ))}
         </section>
       </aside>
     </div>
