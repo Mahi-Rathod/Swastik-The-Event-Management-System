@@ -47,9 +47,9 @@ function Services() {
         <>
             <div className="flex flex-col mx-auto w-full md:flex-row">
                 <div className='event-container'>
-                    <FeaturedEvent data={marriageData} eventType="Featured Weddings" />
-                    <FeaturedEvent data={birthdayData} eventType="Featured BirthDays" />
-                    <FeaturedEvent data={publicEvent} eventType="Public Events" />
+                    <FeaturedEvent data={marriageData} eventType="661c44541e28b02ab8589989" />
+                    <FeaturedEvent data={birthdayData} eventType="661c45401e28b02ab858998b" />
+                    <FeaturedEvent data={publicEvent} eventType="661c45971e28b02ab858998f" />
                 </div>
                 <div className="flex flex-col items-center mt-[2rem]">
                     <button className='bg-blue-600 text-white w-[8rem] font-bold p-1 rounded sticky top-[10%] animate-bounce' onClick={handleQueryPop}>Help</button>

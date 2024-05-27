@@ -34,7 +34,7 @@ const router = createBrowserRouter([{
         }
       ]
     },
-    {path:'services/event', element:<MarriageEvents />},
+    {path:'services/event/:id', element:<MarriageEvents />},
     {path:'login',element:<UserSignIn />},
     {path:'signup',element:<UserSignUp />},
     {path:'vendor-sign-in',element:<VendorSignIn/>},

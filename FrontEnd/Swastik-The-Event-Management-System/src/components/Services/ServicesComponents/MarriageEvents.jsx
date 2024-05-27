@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import Product from "./../../Products/product.jsx"
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
-function MarriageEvents({eventType}) {
+function MarriageEvents() {
   const [status, setStatus] = useState("All");
   const [selectedState, setSelectedState] = useState("");
   const [products, setProducts] = useState([]);
   const [upTo100000, setUpTo100000] = useState([]);
   const [inRange, setInRange] = useState([]);
   const [above1000000, setAbove1000000] = useState([]);
+  const { id } = useParams();
 
   const indianStates = [
     "Andaman and Nicobar Islands",
@@ -63,7 +65,7 @@ function MarriageEvents({eventType}) {
 
       try {
 
-        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/product/get-products`);
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/product/get-products-by-category/:${id}`);
         const products = res.data.data.products
         console.log(res.data.data.products)
         setProducts(res.data.data.products);

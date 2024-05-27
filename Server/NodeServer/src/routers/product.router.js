@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addProduct, getProducts, getProductById } from "../controllers/product.controller.js";
+import { addProduct, getProducts, getProductById, getProductByCategory } from "../controllers/product.controller.js";
 import {upload} from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
@@ -20,5 +20,5 @@ router.route("/get-product-by-id/:id").get(
     getProductById
 )
 router.route("/get-products").get(getProducts);
-
+router.route("/get-products-by-category/:id").get(verifyJWT,getProductByCategory);
 export default router;

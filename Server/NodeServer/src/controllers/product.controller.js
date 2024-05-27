@@ -97,8 +97,28 @@ const getProductById = asyncHandler(async(req, res)=>{
     }
 })
 
+const getProductByCategory = asyncHandler(async(req,res) => {
+    try {
+        const { id } = req.params;
+        console.log(id)
+        const products = await Product.find({category:id});
+
+        return res
+            .status(200)
+            .json(new ApiResponse(200, { products }));
+
+    } catch (error) {
+        console.log(error)
+        throw new ApiError(
+            501,
+            "Something Went Wrong....."
+        )
+    }
+})
+
 export {
     addProduct,
     getProducts,
-    getProductById
+    getProductById,
+    getProductByCategory
 };

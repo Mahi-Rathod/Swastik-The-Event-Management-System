@@ -47,7 +47,7 @@ function FeaturedEvent({ data, eventType }) {
                                 <p className='text-2xl no-underline hover:underline font-bold'>{data[index].name}</p>
                                 <p className='text-justify '>{data[index].review}</p>
                                 <button className='bg-indigo-500 text-white w-[7rem] text-sm px-2 py-1 rounded'>
-                                    <Link to='/services/event'>See More</Link>
+                                    <Link to={`/services/event/:${eventType}`}>See More</Link>
                                 </button>
                             </div>
                         </div>
