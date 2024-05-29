@@ -12,19 +12,21 @@ import Book from './components/BookPackages/BookPackage.jsx'
 import MarriageEvents from './components/Services/ServicesComponents/MarriageEvents.jsx'
 import UserSignIn from './components/Authentication/UserSignIn.jsx'
 import UserSignUp from './components/Authentication/UserSignUp.jsx'
-import VendorSignIn from './components/Authentication/VendorSignIn.jsx'
 import AddProducts from './components/VendorThings/AddProducts.jsx'
 import MyBooking from './components/BookPackages/myBookings.jsx'
-
+import UserProfile from './components/Authentication/UserProfile.jsx'
+import PackagesAdded from './components/BookPackages/PackagesAdded.jsx'
 const router = createBrowserRouter([{
   path:'',
   element:<Layout />,
   children:[
     {path:'', element:<Home />},
+    {path:'login',element:<UserSignIn />},
+    {path:'signup',element:<UserSignUp />},
+    {path:'profile', element:<UserProfile />},
     {path:'about-us', element:<About />},
     {path:'services', element:<Services />},
     {path:'contact', element:<Contact />},
-    // {path:'services/book-package/:id', element:<Book />},
     {
       path:'services/book-package',
       element:<Book />,
@@ -35,11 +37,9 @@ const router = createBrowserRouter([{
       ]
     },
     {path:'services/event/:id', element:<MarriageEvents />},
-    {path:'login',element:<UserSignIn />},
-    {path:'signup',element:<UserSignUp />},
-    {path:'vendor-sign-in',element:<VendorSignIn/>},
     {path:'add-products', element:<AddProducts/>},
-    {path:'my-bookings', element:<MyBooking />}
+    {path:'my-bookings', element:<MyBooking />},
+    {path:'packages-added', element:<PackagesAdded />}
   ],
 }])
 

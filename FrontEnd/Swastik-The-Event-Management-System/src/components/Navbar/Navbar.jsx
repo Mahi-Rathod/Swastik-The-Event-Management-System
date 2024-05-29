@@ -80,7 +80,7 @@ function Navbar() {
                                     <NavLink
                                         className={({ isActive }) => `block duration-200 ${isActive ? "text-orange-500" : "text-gray-500"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0  font-bold bg-slate-200 rounded-sm w-[80%] text-center`
                                         }
-                                        to='/'
+                                        to='profile'
                                     >
                                         <p className="p-2">Profile</p>
                                     </NavLink>
@@ -88,7 +88,7 @@ function Navbar() {
                                     <NavLink
                                         className={({ isActive }) => `block duration-200 ${isActive ? "text-orange-500" : "text-gray-500"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0  font-bold bg-slate-200 rounded-sm  w-[80%] text-center`
                                         }
-                                        to='/our-products'
+                                        to='/packages-added'
                                     >
                                         <p className="p-2">Our Products</p>
                                     </NavLink>
@@ -115,7 +115,7 @@ function Navbar() {
                     {checkAuth && !isVendor &&
                         <div className="flex items-center lg:order-2">
                             <div>
-                                <img src={avtar} alt="" className="h-[4rem] rounded-full cursor-pointer" onClick={handleNav} />
+                                <img src={avtar} alt="" className={`h-[4rem] rounded-full cursor-pointer`} onClick={handleNav} />
                             </div>
                             {flag &&
                                 <div className="flex w-[9%] flex-col gap-2 absolute top-[4.5rem] bg-white p-1 right-[3rem] items-center">
@@ -130,7 +130,7 @@ function Navbar() {
                                     <NavLink
                                         className={({ isActive }) => `block duration-200 ${isActive ? "text-orange-500" : "text-gray-500"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0  font-bold bg-slate-200 rounded-sm w-[80%] text-center`
                                         }
-                                        to='/'
+                                        to='profile'
                                     >
                                         <p className="p-2">Profile</p>
                                     </NavLink>
