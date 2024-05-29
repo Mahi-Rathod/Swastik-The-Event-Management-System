@@ -44,9 +44,12 @@ body{
 }
 
 .slider .item:nth-child(3){
-    right: 10%;
+    /* right: 10%; */
+    left: -5%;
+    top : 30%
 }
 .slider .item:nth-child(4){
+    top :  70%;
     right: calc(10% - 180px);
 }
 .slider .item:nth-child(5){

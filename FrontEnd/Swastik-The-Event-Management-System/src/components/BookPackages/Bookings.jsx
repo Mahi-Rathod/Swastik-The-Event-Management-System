@@ -24,7 +24,7 @@ function Bookings() {
 
         const fetchUserData = async () =>{
             try {
-                
+                const resUser = await axios.get()
             } catch (error) {
                  console.log(error);
             }

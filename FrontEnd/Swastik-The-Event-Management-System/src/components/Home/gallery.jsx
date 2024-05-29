@@ -4,7 +4,7 @@ import { GrCaretPrevious } from "react-icons/gr"
 
 import "./gallery.css"
 function Gallery({ slides }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(1);
   
   const prev = () => {
     const isFirstSlide = currentIndex === 0;
@@ -53,14 +53,14 @@ function Gallery({ slides }) {
               </div>
             </div>
 
+            <div className="item" style={{ backgroundImage: `url(${slides[((currentIndex) - 1) % 10].img})` }} onClick={prev}>
+            </div>
+
             <div className="item" style={{ backgroundImage: `url(${slides[((currentIndex) + 1) % 10].img})` }} onClick={next}>
             </div>
 
-            <div className="item" style={{ backgroundImage: `url(${slides[((currentIndex) + 2) % 10].img})` }}>
-            </div>
-
-            <div className="item" style={{ backgroundImage: `url(${slides[((currentIndex) + 3) % 10].img})` }}>
-            </div>
+            {/* <div className="item" style={{ backgroundImage: `url(${slides[((currentIndex) + 3) % 10].img})` }}>
+            </div> */}
 
           </div>
           <div className="buttons">
