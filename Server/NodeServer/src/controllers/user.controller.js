@@ -220,6 +220,26 @@ const updateAccountDetails = asyncHandler(async(req, res) =>{
         )
 })
 
+const getUserById= asyncHandler(async(req, res) => {
+    const { id } = req.Params;
+
+    const user = await User.findById(id);
+    if(!user){
+        throw new ApiError(
+            400,
+            "Something Went Wrong . . ."
+        )
+    }
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                user,
+                "Account Details"
+            )
+        )
+})
 
 export {
     registerUser,
@@ -227,5 +247,6 @@ export {
     logoutUser,
     getUser,
     changeCurrentPassword,
-    updateAccountDetails
+    updateAccountDetails,
+    getUserById
 }

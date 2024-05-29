@@ -16,6 +16,7 @@ import AddProducts from './components/VendorThings/AddProducts.jsx'
 import MyBooking from './components/BookPackages/myBookings.jsx'
 import UserProfile from './components/Authentication/UserProfile.jsx'
 import PackagesAdded from './components/BookPackages/PackagesAdded.jsx'
+import Bookings from './components/BookPackages/Bookings.jsx'
 const router = createBrowserRouter([{
   path:'',
   element:<Layout />,
@@ -39,7 +40,8 @@ const router = createBrowserRouter([{
     {path:'services/event/:id', element:<MarriageEvents />},
     {path:'add-products', element:<AddProducts/>},
     {path:'my-bookings', element:<MyBooking />},
-    {path:'packages-added', element:<PackagesAdded />}
+    {path:'packages-added', element:<PackagesAdded />},
+    {path:'booked-packages', element:<Bookings />}
   ],
 }])
 

@@ -96,6 +96,14 @@ function Navbar() {
                                     <NavLink
                                         className={({ isActive }) => `block duration-200 ${isActive ? "text-orange-500" : "text-gray-500"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0  font-bold bg-slate-200 rounded-sm  w-[80%] text-center`
                                         }
+                                        to='/booked-packages'
+                                    >
+                                        <p className="p-2">Bookings</p>
+                                    </NavLink>
+
+                                    <NavLink
+                                        className={({ isActive }) => `block duration-200 ${isActive ? "text-orange-500" : "text-gray-500"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0  font-bold bg-slate-200 rounded-sm  w-[80%] text-center`
+                                        }
                                         to='/add-products'
                                     >
                                         <p className="p-2">Add Products</p>
