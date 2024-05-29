@@ -34,7 +34,7 @@ const bookPackage = asyncHandler(async(req, res)=>{
     const book = await BookPackage.create({
         customer,
         bookedItem,
-        orderPrice,
+        orderPrice:orderPrice,
         address,
         functionDate
     })

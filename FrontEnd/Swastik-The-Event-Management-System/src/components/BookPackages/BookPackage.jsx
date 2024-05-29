@@ -110,12 +110,16 @@ function Book() {
 
 
     const saveBookings = async () => {
-        const requestData = new FormData();
-        requestData.append("orderPrice", product.productPrice);
-        requestData.append("address", address);
-        requestData.append("functionDate", startDate);
+        const requestData = {
+        "orderPrice":product.productPrice,
+        "address": `${product.banquetHall} ${product.city} ${product.state}`,
+        "functionDate": startDate
+        }
         try {
-            const bookRes = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/bookPackage/:${product._id}`)
+            const bookRes = await axiosInstanceUser.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/bookPackage/${product._id}`,requestData);
+            if(bookRes.status===201){
+                alert("Your Order Placed SuccessFully You Can Track Your Order");
+            }
         } catch (error) {
             console.log(error);
         }
@@ -140,7 +144,7 @@ function Book() {
                     order_id: order_id,
                     handler: function (response) {
                         console.log(response);
-                        saveBookings(amount);
+                        saveBookings();
                         alert("payment Succeeded!");
                     },
                     prefill: {
@@ -176,20 +180,20 @@ function Book() {
     const handleProceed = async () => {
         const user = await axiosInstanceUser.get(`/users/getUser`);
         const { fullName, email, mobileNumber } = user.data.data.user;
-        
+
         const formData = {
-            "amount" : product.productPrice,
-            "productName" : product.productName,
-            "productDescription" : product.productDescription,
-            "name" : fullName,
-            "email" : email,
-            "contact" : mobileNumber,
-            "productImage" : product.productImage,
+            "amount": product.productPrice,
+            "productName": product.productName,
+            "productDescription": product.productDescription,
+            "name": fullName,
+            "email": email,
+            "contact": mobileNumber,
+            "productImage": product.productImage,
         }
-        if(selectedDate === startDate){
+        if (selectedDate === startDate) {
             paymentForm(formData);
         }
-        else{
+        else {
             alert("Please Select Date")
         }
     }

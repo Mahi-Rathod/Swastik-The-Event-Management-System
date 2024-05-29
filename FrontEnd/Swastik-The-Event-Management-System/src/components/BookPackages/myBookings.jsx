@@ -63,7 +63,7 @@ function MyBooking() {
                     ))}
                 </div>
             </aside>
-            <aside className="w-[80%] h-[90vh] m-auto text-center p-2">
+            <aside className="w-[80%] m-auto text-center p-2">
                 {
                     status === "All" && (
                         <>

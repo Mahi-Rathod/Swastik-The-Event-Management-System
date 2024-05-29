@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Product from "./../../Products/product.jsx"
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function MarriageEvents() {
   const [status, setStatus] = useState("All");
@@ -11,6 +11,7 @@ function MarriageEvents() {
   const [upTo100000, setUpTo100000] = useState([]);
   const [inRange, setInRange] = useState([]);
   const [above1000000, setAbove1000000] = useState([]);
+  const navigate = useNavigate();
   const { id } = useParams();
   const indianStates = [
     "Andaman and Nicobar Islands",
@@ -159,6 +160,10 @@ function MarriageEvents() {
             ))}
           </select>
         </div>
+        <br />
+        <h1 className="w-[90%] text-black text-md font-semibold p-1 rounded-sm">You Can Customize Packages</h1>
+        <hr className="py-3" />
+        <button className='w-[80%] ml-auto mr-auto' onClick={()=> navigate('/add-products') }>Click here</button>
       </aside>
       <aside className="w-[80%] mr-auto ml-auto text-center p-2">
         <div className="w-full h-10 mb-1 bg-white font-extrabold p-1 text-start text-2xl font-mono"> <h1> Events </h1> </div>
