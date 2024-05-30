@@ -11,7 +11,7 @@ function Footer(){
                 <div className="company">
                     <div className="com">
                         <img src={img} alt="" />
-                        <h2>Swastika</h2>
+                        <h2>Swastik</h2>
                     </div>
                     <p>Near MGM's College of Engineering, <br />Nanded, <br /> 431601</p>
                 </div>
