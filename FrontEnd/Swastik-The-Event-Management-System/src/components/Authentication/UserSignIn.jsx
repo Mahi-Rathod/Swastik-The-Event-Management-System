@@ -32,6 +32,7 @@ function UserSignIn() {
           dispatch(loginSuccess());
           navigate('/');
         }
+        
       }
       catch (error) {
         navigate('/login')
@@ -54,13 +55,15 @@ function UserSignIn() {
 
     try {
       const response = await axiosInstance.post('/login', registerData, { withCredentials: true });
-
+      console.log(response);
       if (response.data.statusCode === 200) {
         dispatch(loginSuccess());
         navigate('/');
       }
     } catch (error) {
-      console.error('Error registering user:', error);
+      if(error.response.status === 401){
+        alert("InValid Password")
+      }
     }
   }
 
