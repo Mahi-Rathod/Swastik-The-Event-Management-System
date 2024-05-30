@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { NavLink,useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import girlimg from '../../assets/logingirl.jpg'
 import axios from "axios"
 import './login.css'
@@ -9,13 +9,13 @@ function UserSignUp() {
   const [confirmPassword, setConfirmPassword] = useState("")
   const navigate = useNavigate();
   const [registerData, setRegisterData] = useState({
-    fullName:"",
-    email : "",
-    mobileNumber:"",
-    password:"",
-    isVendor:"false"
+    fullName: "",
+    email: "",
+    mobileNumber: "",
+    password: "",
+    isVendor: "false"
   })
-  const handleChange = (e) =>{
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setRegisterData({
       ...registerData,
@@ -23,40 +23,48 @@ function UserSignUp() {
     });
   }
 
-  const handleSubmit = async (e) =>{
+  const handleChangeVendor = (e) =>{
+    const { name } = e.target
+    setRegisterData({
+      ...registerData, 
+      [name] : !registerData.isVendor
+    })
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if(registerData.password != confirmPassword){
+    if (registerData.password != confirmPassword) {
       setPasswordMatchError('Passwords do not match');
       return
     }
     try {
       console.log(registerData)
       let fullName = registerData.fullName.toUpperCase();
-      let tuple = [' ', 'A', 'B', 'C', 'D', 'E', 
-      'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+      let tuple = [' ', 'A', 'B', 'C', 'D', 'E',
+        'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
-      let number=['0','1','2','3','4','5','6','7','8','9'];
+      let number = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
-      for(let i=0; i<fullName.length;i++){
-        if(!tuple.includes(fullName[i])){
+      for (let i = 0; i < fullName.length; i++) {
+        if (!tuple.includes(fullName[i])) {
           alert("Name should only be alphabets");
           throw error;
         }
       }
 
-      var passw=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{4,15}$/;
-      if(!registerData.password.match(passw)){
+      var passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{4,15}$/;
+      if (!registerData.password.match(passw)) {
         alert("password should contain alphabets, numerics");
         throw error;
       }
 
       let mobileNumber = registerData.mobileNumber
-      if(mobileNumber.length!=10){
+      if (mobileNumber.length != 10) {
         alert("Please Enter valid Mobile Number");
         throw error;
       }
-      for(let i=0; i<mobileNumber.length;i++){
-        if(!number.includes(mobileNumber[i])){
+      for (let i = 0; i < mobileNumber.length; i++) {
+        if (!number.includes(mobileNumber[i])) {
           alert("Please Enter Correct Mobile Number");
           throw error;
         }
@@ -65,9 +73,9 @@ function UserSignUp() {
       const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/users/register`, registerData);
       // Assuming API returns a success message or user data upon successful registration
       // Reset form data after successful registration
-      if(response.data.statusCode === 200){
+      if (response.data.statusCode === 200) {
         alert("Account Created Successfully");
-        navigate('/login'); 
+        navigate('/login');
       }
       setPasswordMatchError('');
     } catch (error) {
@@ -76,7 +84,7 @@ function UserSignUp() {
     }
   }
 
-  const handleConfirm = (e) =>{
+  const handleConfirm = (e) => {
     setConfirmPassword(e.target.value)
   }
 
@@ -94,9 +102,9 @@ function UserSignUp() {
 
           <div className='p-5 rounded drop-shadow-md'>
             <form className='flex flex-col gap-2' onSubmit={handleSubmit}>
-              
+
               <div className="input-box">
-                <input 
+                <input
                   type="text" name="fullName"
                   value={registerData.fullName}
                   onChange={handleChange}
@@ -139,8 +147,18 @@ function UserSignUp() {
                 />
                 <span>Confirm Password</span>
               </div>
-              
-            
+
+              <div className="w-[100%] flex flex-row gap-4">
+                <span>Are you vendor</span>
+                <input type="checkbox" name="isVendor"
+                  value={registerData.isVendor}
+                  onChange={handleChangeVendor}
+                  required
+                />
+
+              </div>
+
+
               <div className='submit-btn'>
                 <button>Register</button>
               </div>

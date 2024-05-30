@@ -221,13 +221,12 @@ const updateAccountDetails = asyncHandler(async(req, res) =>{
 })
 
 const getUserById= asyncHandler(async(req, res) => {
-    const { id } = req.Params;
-
+    const { id } = req.params;
     const user = await User.findById(id);
     if(!user){
         throw new ApiError(
             400,
-            "Something Went Wrong . . ."
+            "user not found . . ."
         )
     }
     return res

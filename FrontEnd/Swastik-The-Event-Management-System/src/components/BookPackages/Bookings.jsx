@@ -5,7 +5,6 @@ import BookCardVendor from './BookCardVendor';
 function Bookings() {
     const [products, setProducts] = useState([]);
     const [status, setStatus] = useState("All");
-
     const bookingAxiosInstance = axios.create({
         baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1`,
         withCredentials: true,
@@ -21,17 +20,7 @@ function Bookings() {
                 console.error(error);
             }
         };
-
-        const fetchUserData = async () =>{
-            try {
-                const resUser = await axios.get()
-            } catch (error) {
-                 console.log(error);
-            }
-        }
-
         fetchData();
-        fetchUserData();
     }, [status]);
 
     const handleClick = (e) => {
@@ -46,8 +35,6 @@ function Bookings() {
     const completedBookingCount = status === "COMPLETED"
         ? products
         : products.filter(product => product.status === status).length;
-
-    console.log(completedBookingCount)
 
     return (
         <div className="w-[90%] m-auto flex flex-row justify-evenly p-2 gap-3">
@@ -90,6 +77,8 @@ function Bookings() {
                                         price={product.orderPrice}
                                         status={product.status}
                                         functionDate={product.functionDate}
+                                        customer = {{id : product.customer}}
+                                        bookingId={product._id}
                                     />
                                 ))
                             )}
@@ -114,6 +103,8 @@ function Bookings() {
                                         price={product.orderPrice}
                                         status={product.status}
                                         functionDate={product.functionDate}
+                                        customer = {product.customer}
+                                        bookingId={product._id}
                                     />
                                 ))
                             )}
@@ -138,6 +129,8 @@ function Bookings() {
                                         price={product.orderPrice}
                                         status={product.status}
                                         functionDate={product.functionDate}
+                                        customer = {product.customer}
+                                        bookingId={product._id}
                                     />
                                 ))
                             )}

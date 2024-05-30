@@ -139,8 +139,37 @@ const getVendorBookings = asyncHandler(async(req, res)=>{
     }
 });
 
+const updateStatus = asyncHandler(async(req, res) =>{
+    const {id} = req.params;
+
+    const { bookingStatus } = req.body;
+
+    const booking = await BookPackage.findByIdAndUpdate(
+        id,
+        {
+            $set :{
+                status : "COMPLETED",
+            }
+        },
+        {
+            new : true
+        }
+    )
+
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                booking,
+                "Status update successfully"
+            )
+        )
+})
+
 export {
     bookPackage,
     getCustomerBookings,
-    getVendorBookings
+    getVendorBookings,
+    updateStatus
 };
