@@ -4,7 +4,6 @@ import girlimg from '../../assets/logingirl.jpg'
 import axios from "axios"
 import './login.css'
 function UserSignUp() {
-
   const [passwordMatchError, setPasswordMatchError] = useState('');
   const [confirmPassword, setConfirmPassword] = useState("")
   const navigate = useNavigate();
@@ -13,7 +12,7 @@ function UserSignUp() {
     email: "",
     mobileNumber: "",
     password: "",
-    isVendor: "false"
+    isVendor: false
   })
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,13 +22,9 @@ function UserSignUp() {
     });
   }
 
-  const handleChangeVendor = (e) =>{
-    const { name } = e.target
-    setRegisterData({
-      ...registerData, 
-      [name] : !registerData.isVendor
-    })
-  }
+  const handleCheckboxChange = (event) => {
+    setRegisterData({ ...registerData, isVendor: event.target.checked });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -150,10 +145,10 @@ function UserSignUp() {
 
               <div className="w-[100%] flex flex-row gap-4">
                 <span>Are you vendor</span>
-                <input type="checkbox" name="isVendor"
-                  value={registerData.isVendor}
-                  onChange={handleChangeVendor}
-                  required
+                <input
+                  type="checkbox"
+                  checked={registerData.isVendor}
+                  onChange={handleCheckboxChange}
                 />
 
               </div>
