@@ -26,12 +26,16 @@ const registerUser = asyncHandler (async(req, res)=>{
 
     const {fullName, email, mobileNumber, password, isVendor} =req.body
 
+    console.log(isVendor);
     if(
-        [fullName, email, mobileNumber, password, isVendor].some((field)=> field?.trim()==="")
+        [fullName, email, mobileNumber, password].some((field)=> field?.trim()==="")
     ){
         throw new ApiError(400, "All fields are required");
     }
 
+    if(!isVendor){
+        throw new ApiError(400, "check vendor");
+    }
     const existedUser = await User.findOne({
         $or: [{ email }, { mobileNumber }]
     })
