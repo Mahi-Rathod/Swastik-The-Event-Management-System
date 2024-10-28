@@ -1,0 +1,116 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.product-container{
+    height:50vh;
+    width:16rem;
+    background-color:#fff;
+    background-size: cover;
+    border-radius : 0.2rem;
+    position:relative;
+    overflow:hidden;
+    transition: transform 0.8s;
+    /* padding: 0.5rem; */
+}
+.details{
+    width: 100%;
+    height: 0;
+    background: linear-gradient(rgba(0,0,0,0.6), #ff004f);
+    border-radius: 0.2rem;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction:column;
+    text-align: center;
+    font-size: 14px;
+    font-family:sans-serif;
+    transition: 0.5s;
+}
+
+.details .name{
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
+    font-size: 1.3rem;
+    border: 1px solid rgb(255, 255, 255);
+    padding: 0.3rem;
+    border-radius: 0.2rem;
+
+}
+.details .fav-desc{
+    color: rgb(231, 231, 231);
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+    text-align: justify;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.details .rate-sold{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.details .rate-sold p{
+    width: 5rem;
+    color: #fff;
+    padding: 0.2rem;
+    background: transparent;
+    border-radius: 1rem;
+    box-shadow: 0px 2px 4px#fff;
+}
+.details .Book-Now{
+    text-align: center;
+    padding: 0.3rem;
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+    background: transparent;
+    border: 1px solid #ffffffa1;
+    cursor: pointer;
+    color: #fff;
+    border-radius: 0.2rem;
+    transition: all 1s;
+}
+
+.details .Book-Now:hover{
+    background: rgba(255, 99, 255, 0.514);
+    color: rgb(0, 3, 48);
+    border:1px solid rgba(255, 99, 255, 0.514);
+}
+
+.product-details{
+    position: absolute;
+    bottom: 0;
+    background-color: #ffffffef;
+    width: 100%;
+    height: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    font-family: 'Courier New', Courier, monospace;
+    transition: all 1s;
+}
+.name-heart{
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+}
+.rate-sold{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.product-container:hover .details{
+    height: 100%;
+}
+.product-container:hover .product-details{
+    display: none;
+}

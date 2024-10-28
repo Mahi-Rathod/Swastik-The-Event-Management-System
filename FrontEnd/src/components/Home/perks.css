@@ -1,0 +1,58 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.perks {
+    /* height: 105vh; */
+    width: 97vw;
+    border-bottom: 1px solid black;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif;
+}
+
+.perks-containers {
+    /* height: 100vh; */
+    padding-top: 2%;
+    width: 85vw;
+    margin: auto;
+    font-size: 0.7rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 7%;
+    /* border: 1px solid black; */
+}
+
+.perks-containers .perks1 {
+    margin-bottom: 2rem;
+    width: 40vmin;
+    /* height: 45vmin; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+}
+
+.perks-containers .perks1 h1 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.perks-containers .perks1 h2 {
+    font-family: 'Cascadia Code font';
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: "Reddit Mono", monospace;
+}
+
+.perks-containers .perks1 p {
+    /* font-family: 'DejaVu Sans Mono'; */
+    font-size: 0.9rem;
+    text-align: justify;
+    font-family: "Reddit Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 400;
+}

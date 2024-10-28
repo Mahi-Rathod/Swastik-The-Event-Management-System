@@ -1,0 +1,64 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.footers{
+    height: 30vh;
+    width: 97vw;
+    border-top: 1px solid black;
+    margin: auto;
+    display: flex;
+    justify-content: space-evenly;
+}
+.footers .company .com{
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    
+}
+.footers .company img{
+    height: 10vh;
+}
+.footers .company .com h2{
+    width: 11vw;
+    text-align: justify ;
+    font-size: 1.6em;
+    font-family:'Courier New', Courier, monospace;
+}
+.footers .company p{
+    width: 11vw;
+    padding-left: 4em;
+    padding-right: 0.5rem;
+    text-align: justify ;
+    font-size: 1em;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.sol h1{
+    width: 11vw;
+    text-align: justify ;
+    font-size: 1.6em;
+    font-family: 'Courier New', Courier, monospace;
+}
+.sol p{
+    width: 11vw;
+    text-align: justify ;
+    font-size: 1em;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.cont-join h2{
+    text-align: justify ;
+    font-size: 1.6em;
+    font-family: 'Courier New', Courier, monospace;
+}
+.social-media{
+    width: 11vw;
+    height: 10vh;
+    text-align: justify ;
+    font-size: 1.4em;
+    margin-top: 8rem;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}

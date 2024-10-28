@@ -1,0 +1,12 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.event-container{
+    width: 85%;
+}
+/* .search-events{
+    width: 10rem; 
+    height: 50vh;
+    background-color: aqua;
+} */

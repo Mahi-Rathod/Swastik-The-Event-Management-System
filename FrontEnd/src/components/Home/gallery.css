@@ -1,0 +1,162 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: #eaeaea;   
+}
+.main{
+    height: 80vh ;
+}
+.container{
+    position: absolute;
+    width: 75vw;
+    height: 75vh;
+    top:50%;
+    left: 48%;
+    transform: translate(-50%,-50%);
+    background-color: #eeeeee;
+    box-shadow: 0 10px 10px #bcbaba;
+}
+
+.container .slider .item{
+    position: absolute;
+    height: 300px;
+    width: 170px;
+    top: 50%;
+    transform: translate(0,-50%);
+    border-radius: 5px;
+    box-shadow: 0 0px 10px #757373;
+    background-position: center;
+    background-size: cover;
+    display: inline-block;
+    transition: all 0.5s;
+}
+
+.slider .item:nth-child(1),
+.slider .item:nth-child(2){
+    top: 0;
+    left: 0;
+    transform: translate(0);
+    width: 100%;
+    height: 100%;
+}
+
+.slider .item:nth-child(3){
+    /* right: 10%; */
+    left: -5%;
+    top : 30%
+}
+.slider .item:nth-child(4){
+    top :  70%;
+    right: calc(10% - 180px);
+}
+.slider .item:nth-child(5){
+    display: none;
+    left: calc(60% + 360px);
+}
+
+.item .content{
+    position: absolute;
+    top: 50%;
+    transform: translate(0,-50%);
+    left: 100px;
+    width: 200px;
+    display: none;
+    color: #fff;
+}
+
+.item:nth-child(2) .content{
+    display: block;
+}
+.item .content .name{
+    text-transform: uppercase;
+    font-size: 35px;
+    font-weight: bold;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    opacity: 0;
+    animation: animate 1s ease-in-out 1 forwards;
+}
+
+.item .content .dec{
+    margin: 10px 0 10px;
+    font-size: 15px;
+    opacity: 0;
+    animation: animate 1s ease-in-out 0.3s 1 forwards;
+    text-align: justify;
+}
+
+.item .content button{
+    padding: 10px 20px;
+    border: none;
+    background-color: #6abef7;
+    font-weight: 500;
+    font-size: 15px;
+    border: 0px;
+    border-radius:0.3rem ;
+    transition: all 0.5s;
+    animation: animate 1s ease-in-out 0.6s 1 forwards;
+}
+
+.item .content button:hover{
+    background-color: orange;
+
+}
+
+@keyframes animate {
+    from{
+        opacity: 0;
+        transform: translate(0,100px);
+        filter: blur(33px);
+    }
+    to{
+        opacity: 1;
+        transform: translate(0);
+        filter: blur(0);
+    }
+}
+
+.buttons{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    bottom: 10px;
+}
+
+.buttons button{
+    margin: 0 15px;
+    font-size: 1.3rem;
+    background: transparent;
+    border: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: all 0.5s;
+    border-radius: 50%;
+    color:black;
+}
+.buttons button:hover{
+    /* background: #ffffffbb; */
+    color: azure;
+    opacity:0.9; 
+}
+@media only screen and (max-width:900px) {
+
+    .slider .item:nth-child(3){
+        left: 60%;
+        display: none;
+    }
+    .slider .item:nth-child(4){
+        left: calc(60% + 180px);
+        display: none;
+    }
+    .slider .item:nth-child(5){
+        left: calc(60% + 360px);
+        display: none;
+    }
+    .item:nth-child(2) .content{
+        display:none;
+    }
+}
